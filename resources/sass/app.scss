@@ -1,0 +1,64 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+// Variables
+@import 'variables';
+$fa-font-path: '../webfonts';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// AdminLTE
+@import '~admin-lte/dist/css/adminlte.min.css';
+
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '~@fortawesome/fontawesome-free/css/solid.css';
+@import '~@fortawesome/fontawesome-free/css/brands.css';
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.btn-1 {
+  background-color: #289672;
+  color: #e6dd3b;
+  padding: 7px;
+  border-radius: 5px;
+}
+.btn-1:hover {
+  color: white;
+}
+
+/* Content/Artikel Info */
+#bg-shadow {
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
+/* ./Content/Artikel Info */
+
+
+.carousel__item {
+  height: 300px;
+  width: 100%;
+  background-color: var(--carousel-color-primary);
+  color:  var(--carousel-color-white);
+  font-size: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel__slide {
+  padding: 10px;
+}
+
+.carousel__prev,
+.carousel__next {
+  box-sizing: content-box;
+  border: 5px solid white;
+}
+
+
