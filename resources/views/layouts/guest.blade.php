@@ -26,7 +26,7 @@
               >
                 <router-link :to="{ name: 'homepage' }" class="navbar-brand">
                   <img
-                    src="storage/img/TbLogo.png"
+                    src="../storage/img/TbLogo.png"
                     alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3"
                     style="opacity: 0.8"
@@ -118,7 +118,7 @@
           <div class="row">
             <div class="col-lg-6 pl-5">
               <img
-                src="storage/img/Logo TB 169.png"
+                src="../storage/img/Logo TB 169.png"
                 class="w-75"
                 alt="logo-TB"
               />

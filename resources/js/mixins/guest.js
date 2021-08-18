@@ -24,10 +24,10 @@ export default {
             else{
                 this.page = page
                 axios.get(this.endpoint, { params: { page : this.page } })
-                  .then(({data}) => {
-                        this.data = data
-                        this.infos = data.data
-              })
+                    .then(({data}) => {
+                        this.data.data.push(...data.data)
+                        this.data.next_page_url = data.next_page_url
+                    })
             }
         },
     },

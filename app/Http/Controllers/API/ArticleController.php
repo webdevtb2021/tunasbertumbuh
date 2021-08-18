@@ -15,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('user')->latest()->paginate(10);
+        $articles = Article::with(['user:id,name','articleImages'])->latest()->paginate(10);
         return response()->json($articles);
     }
 
@@ -70,7 +70,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::with('articleImages')->findOrFail($id);
+        $article = Article::with(['user:id,name','articleImages'])->findOrFail($id);
         return response()->json($article);
     }
 
