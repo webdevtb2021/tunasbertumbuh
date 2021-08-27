@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Periode;
 use App\Models\Position;
 use Illuminate\Http\Request;
 
@@ -25,10 +26,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexMembers($angkatan=2)
+    public function indexMembers($period=null)
     {
-       $data = Position::with('user:id,name','jabatan','periode','division:id,name')->where('periode_id',2)->latest()->paginate(10);
+        if($period==null)
+            $period = Periode::max('id');
+        $periodes = Periode::all();
+        $member = Position::with('user:id,name','jabatan','periode','division:id,name')->where('periode_id',$period)->orderBy('jabatan_id','ASC')->get();
+        $data=null;
+        $data["member"] = $member;
+        $data["period"] = $periodes;
+        $data["periodInt"] = $period;
         return response()->json($data);
+
     }
 
     public function indexTestimonies()

@@ -27,6 +27,7 @@ class PositionFactory extends Factory
     public function definition()
     {
         return [
+            'leader' =>User::all()->random()->id,
             'division_id' =>Division::all()->random()->id,
             'user_id' =>User::all()->random()->id,
             'jabatan_id' => Jabatan::all()->random()->id,

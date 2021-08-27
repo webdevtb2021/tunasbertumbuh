@@ -15,6 +15,7 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('leader');
             $table->unsignedBigInteger('division_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('jabatan_id');
@@ -22,6 +23,7 @@ class CreatePositionsTable extends Migration
             $table->timestamps();
 
             $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade');
+            $table->foreign('leader')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('jabatan_id')->references('id')->on('jabatans')->onDelete('cascade');
             $table->foreign('periode_id')->references('id')->on('periodes')->onDelete('cascade');

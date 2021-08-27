@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('user:id,name')->withCount('volunteers')->latest()->paginate(10);
+        $projects = Project::with('user:id,name')->withCount('volunteers')->latest()->paginate(3);
         return response()->json($projects);
     }
 

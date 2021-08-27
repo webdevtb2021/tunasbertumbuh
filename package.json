@@ -25,9 +25,11 @@
         "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
+        "@balkangraph/orgchart.js": "^7.9.19",
         "@fortawesome/fontawesome-free": "^5.15.3",
         "@vue/compiler-sfc": "^3.1.5",
         "admin-lte": "^3.1.0",
+        "cross-env": "^7.0.3",
         "laravel-vue-pagination": "^2.3.1",
         "sweetalert2": "^11.1.0",
         "v-form": "^2.3.5",

@@ -9,11 +9,16 @@ class Position extends Model
 {
     use HasFactory;
 
-    protected $fillable=['division_id','jabatan_id','periode_id','user_id'];
+    protected $fillable=['division_id','jabatan_id','periode_id','user_id','leader'];
 
     public function user()
     {
-    	return $this->belongsTo(User::class)->with('dependences:user_id,instagram,facebook,twitter,created_at');
+    	return $this->belongsTo(User::class)->with('dependences:user_id,instagram,facebook,twitter,created_at,url_image');
+    }
+
+     public function leader()
+    {
+        return $this->belongsTo(User::class,'leader');
     }
 
     public function division()

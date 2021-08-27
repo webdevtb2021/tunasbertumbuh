@@ -21,7 +21,7 @@ class UserArticleImagesSeeder extends Seeder
         \DB::table('articles')->delete();
         \DB::table('users')->delete();
 
-        User::factory(10)->create()->each(function($u) {
+        User::factory(30)->create()->each(function($u) {
             $u->articles()
               ->saveMany(
                   Article::factory(rand(1, 3))->make()

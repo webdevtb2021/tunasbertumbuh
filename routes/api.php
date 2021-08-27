@@ -35,6 +35,7 @@ Route::apiResource('volunteers', VolunteerController::class);
 Route::apiResource('projects', ProjectController::class); 
 Route::get('/testimonies', [UserController::class,'indexTestimonies']); 
 Route::get('/members', [UserController::class,'indexMembers']); 
+Route::get('/members/{period}', [UserController::class,'indexMembers']); 
 Route::get('/finance', [FundreportController::class,'indexFinance']); 
 Route::apiResource('articles', ArticleController::class); 
 Route::apiResource('merchandises', MerchandiseController::class); 

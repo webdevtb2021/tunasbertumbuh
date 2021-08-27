@@ -23,6 +23,8 @@ class DivisionPositionsSeeder extends Seeder
         \DB::table('jabatans')->delete();
         \DB::table('periodes')->delete();
 
+
+        Jabatan::create(['name'=>'Founder']);
         Jabatan::create(['name'=>'Director']);
         Jabatan::create(['name'=>'Manager']);
         Jabatan::create(['name'=>'Staff']);
@@ -31,10 +33,10 @@ class DivisionPositionsSeeder extends Seeder
         Periode::create(['name'=>'2.0']);
         Periode::create(['name'=>'3.0']);
 
-        Division::factory(5)->create()->each(function($d) {
+        Division::factory(10)->create()->each(function($d) {
             $d->positions()
               ->saveMany(
-                  Position::factory(rand(1, 3))->make());
+                  Position::factory(rand(4, 8))->make());
         });  
     }
 }

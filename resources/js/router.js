@@ -60,6 +60,13 @@ const routes = [
     },
 
     {
+      path: '/members/:period', 
+      component: GuestMembers,
+      name: 'indexMembers',
+      props: true
+    },
+
+    {
       path:"/merchandises",
       name: "merchandises",
       component: GuestMerchandises
