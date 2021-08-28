@@ -23,7 +23,7 @@ class MerchandiseFactory extends Factory
     {
         return [
             'title' => rtrim($this->faker->sentence(rand(2,3)),"."),
-            'image' => $this->faker->image('storage/images/merchandises',400,400, null, true),
+            'image' => $this->faker->image('public/storage/images/merchandises',400,400, null, true),
             'description' => $this->faker->paragraphs(rand(2,3),true),
             'price' =>rand(1,3)*10000,
         ];

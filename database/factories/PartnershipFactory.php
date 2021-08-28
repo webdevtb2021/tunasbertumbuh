@@ -23,7 +23,7 @@ class PartnershipFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'image' => $this->faker->image('storage/images/partnerships',400,200, null, false),
+            'image' => $this->faker->image('public/storage/images/partnerships',400,200, null, false),
             'url' =>'https://instagram.com',
             'category' => rand(1,2),
             'notes' => $this->faker->sentence(rand(5,10)),
