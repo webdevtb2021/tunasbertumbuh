@@ -23,7 +23,7 @@ class CarouselFactory extends Factory
     {
         return [
             'title' => rtrim($this->faker->sentence(rand(5,10)),"."),
-            'url_image' => $this->faker->image('public/storage/images/carousels/',800,600, null, true),
+            'url_image' => $this->faker->image('storage/images/carousels/',800,600, null, true),
             'status' =>rand(0,1),
             'redirect_page' =>'home',
         ];

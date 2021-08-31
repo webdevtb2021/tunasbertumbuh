@@ -33,20 +33,16 @@
 import guest from '../mixins/guest';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-
 export default {
 	
 	mixins:[guest],
-
     components: {
         Carousel,
         Slide,
         Pagination,
         Navigation
     },
-
     props:['id'],
-
     computed:{
         endpoint () {
             return `/api/articles/${this.id}`;

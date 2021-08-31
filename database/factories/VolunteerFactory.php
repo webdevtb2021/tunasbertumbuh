@@ -25,7 +25,7 @@ class VolunteerFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'image' => $this->faker->image('public/storage/images/volunteers',400,400, null, false),
+            'image' => $this->faker->image('storage/images/volunteers',400,400, null, false),
             'url' =>'https://instagram.com',
             'status' => rand(0,1),
             'notes' => $this->faker->sentence(rand(5,10)),

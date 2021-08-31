@@ -26,7 +26,7 @@ class TransactionFactory extends Factory
     {
         return [
 
-            'image_payment' => $this->faker->image('public/storage/images/transactions',400,200, null, false),
+            'image_payment' => $this->faker->image('storage/images/transactions',400,200, null, false),
             'total_transaction' => (rand(14,20)*10000),
             'notes' => $this->faker->sentence(rand(5,10)),
             'customer_id' => Customer::all()->random()->id,

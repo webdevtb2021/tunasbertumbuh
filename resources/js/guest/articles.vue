@@ -32,17 +32,14 @@
 
 <script>
 import guest from '../mixins/guest';
-
 export default {
 	
 	mixins:[guest],
-
     data() {
         return {
             page : 1,
         }
     },
-
     computed:{
         endpoint () {
             return `/api/articles`;

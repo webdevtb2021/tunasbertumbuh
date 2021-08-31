@@ -113,7 +113,7 @@
               <img
                 class="card-img-top rounded"
                 src="storage/img/photo3.jpg"
-                alt="Dist Photo 1"
+                alt="Dist Photo 3"
               />
               <div
                 class="
@@ -189,7 +189,6 @@
 import guest from '../mixins/guest';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-
 export default {
 	mixins:[guest],
   components: {
@@ -198,20 +197,16 @@ export default {
     Pagination,
     Navigation
   },
-
     data() {
         return {
           
         }
     },
-
     computed:{
         endpoint () {
             return `/api/homepage`;
         },
     },
-
-
     methods:{
       directToPath(url){
           window.open(url,"_blank");

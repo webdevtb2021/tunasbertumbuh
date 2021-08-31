@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function indexTestimonies()
     {
-       $data = User::with('dependences:user_id,testimony,created_at')->select(['id','name'])->get();
+       $data = User::with('dependences:user_id,testimony,created_at')->select(['id','name'])->latest()->paginate(10);
         return response()->json($data);
     }
     /**
