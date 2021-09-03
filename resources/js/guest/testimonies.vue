@@ -2,11 +2,13 @@
 <section id="content-testimoni">
     <div class="container pt-5">
       <div class="row justify-content-center">
+        <div class="col-11 text-center mb-4" style="color: #1E6F5C; border-bottom: 2px solid ;">
+          <h4 class="fw-bolder">  The Testimony Tour</h4>
+        </div>
+    </div>
+      <div class="row justify-content-center">
         <div class="col">
           <div class="direct-chat">
-            <div class="card-header" style="background-color: #1e6f5c">
-              <h3 class="card-title text-white">Testimony</h3>
-            </div>
             <div class="card-body">
               <ul class="contacts-list">
                 <div v-for="testimoni in data.data">
