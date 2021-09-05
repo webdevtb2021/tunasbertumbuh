@@ -15,7 +15,7 @@ class FundreportController extends Controller
      */
     public function indexFinance()
     {
-        $fundreports = Fundreport::latest()->paginate(30);
+        $fundreports = Fundreport::all();
         return response()->json($fundreports);
     }
 
