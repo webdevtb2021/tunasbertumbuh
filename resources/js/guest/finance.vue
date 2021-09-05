@@ -1,32 +1,20 @@
 <template>
     <!-- Content -->
     <section id="finance-report">
+        <div class="container pt-5">
+            <div class="row justify-content-center">
+                <div class="col-11 text-center mb-4" style="color: #1E6F5C; border-bottom: 2px solid ;">
+                  <h4 class="fw-bolder"> Laporan Keuangan Tunas Bertumbuh </h4>
+                </div>
+            </div>
+        </div>
         <div
-            class="container bg-white pt-3 mt-5"
+            class="container bg-white pt-3 mt-2"
             style="border: 2px solid rgb(230, 230, 230)"
         >
             <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <label>Tanggal:</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
-                            </div>
-                            <input
-                                type="text"
-                                class="form-control float-right"
-                                id="reservation"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col">
-                    <table class="table w-100">
+                    <table class="table w-100" id="financeTable" v-if="data">
                         <thead>
                             <tr>
                                 <th scope="col">Tanggal</th>
@@ -37,8 +25,8 @@
                                 <th scope="col">Saldo</th>
                             </tr>
                         </thead>
-                        <tbody v-for="(d, index) in data.data" :key="index">
-                            <tr>
+                        <tbody>
+                            <tr v-for="(d, index) in data" :key="index">
                                 <td>{{ d.date }}</td>
                                 <td>
                                     {{ d.notes }}
@@ -61,6 +49,9 @@
 
 <script>
 import guest from "../mixins/guest";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from 'jquery'; 
 
 export default {
     mixins: [guest],
@@ -69,6 +60,14 @@ export default {
         endpoint() {
             return `/api/finance`;
         },
+    },
+
+    mounted () {
+        axios.get(this.endpoint)
+        .then((response)=>{
+              this.data = response.data;
+              $('#financeTable').DataTable();
+        })
     },
 };
 </script>
