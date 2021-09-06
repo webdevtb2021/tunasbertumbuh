@@ -6,7 +6,7 @@
                 <label>Our Free Merchandises</label>
                 </div> 
                 <div class="row d-flex justify-content-end">
-                <div v-for="(d,index) in data" :key="index" class="col-lg-3">
+                <div v-for="(d,index) in data.free" :key="index" class="col-lg-3">
                     <button class="btn btn-default card mr-auto ml-auto w-75 h-100" data-toggle="modal" data-target="#modal-lg-f1" v-if="d.id">
                         <img class="card-img-top" :src="'storage/images/merchandises/'+d.image" alt="Card image cap" />
                         <div class="card-body">
@@ -24,7 +24,7 @@
                 <label>Our Premium Merchandises</label>
                 </div> 
                 <div class="row d-flex justify-content-end">
-                <div v-for="(d,index) in data" :key="index" class="col-lg-3">
+                <div v-for="(d,index) in data.premium" :key="index" class="col-lg-3">
                 <button class="btn btn-default card mr-auto ml-auto w-75 h-100" data-toggle="modal" data-target="#modal-lg-f">
                     <img class="card-img-top" :src="'storage/images/merchandises/'+d.image" alt="Card image cap" />
                     <div class="card-body">
