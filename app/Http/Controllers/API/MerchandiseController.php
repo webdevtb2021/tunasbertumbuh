@@ -16,8 +16,14 @@ class MerchandiseController extends Controller
      */
     public function index()
     {
-        $merchandises = Merchandise::all();
-        return response()->json($merchandises);
+        // $merchandises = Merchandise::all();
+
+        $merchandisesFree = Merchandise::where('price',0)->get();
+        $merchandisesPremium = Merchandise::where('price','<>',0)->get();
+        $marchendise['free']=$merchandisesFree;
+        $marchendise['premium']=$merchandisesPremium;
+
+        return response()->json($marchendise);
     }
 
     /**
