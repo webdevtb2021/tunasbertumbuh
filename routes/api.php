@@ -13,6 +13,7 @@ use App\Http\Controllers\API\MerchandiseController;
 use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\FundreportController;
 use App\Http\Controllers\API\VolunteerController;
+use App\Http\Controllers\API\DonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,5 @@ Route::get('/members/{period}', [UserController::class,'indexMembers']);
 Route::get('/finance', [FundreportController::class,'indexFinance']); 
 Route::apiResource('articles', ArticleController::class); 
 Route::apiResource('merchandises', MerchandiseController::class); 
+Route::get('/donationGuest', [DonationController::class,'indexDonations']); 
+Route::apiResource('/donations', DonationController::class); 

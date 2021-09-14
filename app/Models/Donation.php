@@ -9,7 +9,7 @@ class Donation extends Model
 {
     use HasFactory;
 
-    protected $fillable=['category','bukti','notes_money','notes_barang','address_donation','verification'];
+    protected $fillable=['category','bukti','jenis_barang_or_jumlah_bayar','notes','address','verification','donator_id'];
 
     public function donator()
     {

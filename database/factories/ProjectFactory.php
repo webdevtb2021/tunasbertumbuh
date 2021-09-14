@@ -28,7 +28,7 @@ class ProjectFactory extends Factory
             'datetime' =>$this->faker->dateTimeBetween('+1 week', '+1 month'),
             'body' => $this->faker->paragraphs(rand(3,7),true),
             'user_id' =>User::all()->random()->id,
-            'image' => $this->faker->image('storage/images/projects',400,200, null, false),
+            'image' => $this->faker->image('public/storage/images/projects',400,200, null, false),
 
         ];
     }

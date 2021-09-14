@@ -26,6 +26,11 @@ const routes = [
       component: GuestDonations
     },
     {
+      path:"/donationGuest",
+      name: "donationGuest",
+      component: GuestDonations
+    },
+    {
       path:"/partnerships",
       name: "partnerships",
       component: GuestPartnerships

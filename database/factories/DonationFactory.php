@@ -27,9 +27,9 @@ class DonationFactory extends Factory
         return [
             'category' => rand(1,2),
             'bukti' => $this->faker->image('public/storage/images/donations',400,200, null, false),
-            'notes_money' => rtrim($this->faker->sentence(rand(5,10)),"."),
-            'notes_barang' => rtrim($this->faker->sentence(rand(5,10)),"."),
-            'address_donation' =>$this->faker->address(),
+            'jenis_barang_or_jumlah_bayar' => rtrim($this->faker->sentence(rand(1,2)),"."),
+            'notes' => rtrim($this->faker->sentence(rand(5,10)),"."),
+            'address' =>$this->faker->address(),
             'verification'=>rand(0,1),
             'donator_id' => Donator::all()->random()->id,
             

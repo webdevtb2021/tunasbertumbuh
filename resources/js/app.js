@@ -22,6 +22,11 @@ import swal from 'sweetalert2';
 
 window.swal = swal;
 
+
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css'
+
+app.use(ElementPlus)
 //use vue router
 app.use(router)
 

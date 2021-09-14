@@ -29,7 +29,7 @@ class DependenceFactory extends Factory
             'instagram' =>'https://instagram.com',
             'facebook' =>'https://facebook.com',
             'twitter' =>'https://twitter.com',
-            'url_image' => $this->faker->image('storage/images/users',400,400, null, true),
+            'url_image' => $this->faker->image('public/storage/images/users',400,400, null, true),
         ];
     }
 }

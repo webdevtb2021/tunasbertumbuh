@@ -18,9 +18,9 @@ class CreateDonationsTable extends Migration
             //Kategori donasi, 1:money, 2: barang
             $table->integer('category')->comment('1 for money, 2 for barang')->default(1);
             $table->string('bukti');
-            $table->string('notes_money')->nullable();
-            $table->text('notes_barang')->nullable();
-            $table->text('address_donation')->nullable();
+            $table->string('jenis_barang_or_jumlah_bayar')->nullable();
+            $table->text('notes')->nullable();
+            $table->text('address')->nullable();
             //Kategori verification, 1:verified, 2: not valid, 3:not yet verify
             $table->integer('verification')->comment('1:verified, 2: not valid, 3:not yet verify')->default(3);
 
