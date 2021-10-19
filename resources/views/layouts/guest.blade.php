@@ -8,7 +8,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
   <body
-    class="hold-transition layout-top-nav text-md"
+    class="hold-transition layout-top-nav"
     style="background-color: #f3f3f3"
   >
     <div class="wrapper" id="app">

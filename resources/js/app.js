@@ -13,7 +13,6 @@ const app = createApp({})
 
 import {Form, Errors } from 'vform'
 window.Form = Form;
-
 app.component(Errors.name, Errors)
 
 app.component('pagination', require('laravel-vue-pagination'));
