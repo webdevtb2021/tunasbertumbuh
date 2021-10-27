@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+    createRouter,
+    createWebHistory
+} from "vue-router";
 
 import GuestHomepage from "./guest/homepage.vue";
 import GuestDonations from "./guest/donations";
@@ -13,99 +16,112 @@ import GuestTestimonies from "./guest/testimonies";
 import GuestFinance from "./guest/finance";
 import GuestOpenRecruitment from "./guest/openrecruitments";
 import GuestVolunteer from "./guest/volunteers";
+import AdminFinance from "./admin/adminFinance";
+import AdminProject from "./admin/adminProject";
 
-const routes = [
-  {
-      path:"/",
-      name: "homepage",
-      component: GuestHomepage
+const routes = [{
+        path: "/",
+        name: "homepage",
+        component: GuestHomepage,
     },
     {
-      path:"/donations",
-      name: "donations",
-      component: GuestDonations
+        path: "/donations",
+        name: "donations",
+        component: GuestDonations,
     },
     {
-      path:"/donationGuest",
-      name: "donationGuest",
-      component: GuestDonations
+        path: "/donationGuest",
+        name: "donationGuest",
+        component: GuestDonations,
     },
     {
-      path:"/partnerships",
-      name: "partnerships",
-      component: GuestPartnerships
+        path: "/partnerships",
+        name: "partnerships",
+        component: GuestPartnerships,
     },
     {
-      path:"/projects",
-      name: "projects",
-      component: GuestProjects
+        path: "/projects",
+        name: "projects",
+        component: GuestProjects,
     },
     {
-      path: '/projects/:id', 
-      component: GuestProject,
-      name: 'projects.show',
-      props: true
+        path: "/projects/:id",
+        component: GuestProject,
+        name: "projects.show",
+        props: true,
     },
     {
-      path:"/articles",
-      name: "articles",
-      component: GuestArticles
+        path: "/articles",
+        name: "articles",
+        component: GuestArticles,
     },
     {
-      path: '/articles/:id', 
-      component: GuestArticle,
-      name: 'articles.show',
-      props: true
-    },
-
-    {
-      path:"/members",
-      name: "members",
-      component: GuestMembers
+        path: "/articles/:id",
+        component: GuestArticle,
+        name: "articles.show",
+        props: true,
     },
 
     {
-      path: '/members/:period', 
-      component: GuestMembers,
-      name: 'indexMembers',
-      props: true
+        path: "/members",
+        name: "members",
+        component: GuestMembers,
     },
 
     {
-      path:"/merchandises",
-      name: "merchandises",
-      component: GuestMerchandises
+        path: "/members/:period",
+        component: GuestMembers,
+        name: "indexMembers",
+        props: true,
     },
 
     {
-      path:"/testimonies",
-      name: "testimonies",
-      component: GuestTestimonies
+        path: "/merchandises",
+        name: "merchandises",
+        component: GuestMerchandises,
     },
 
     {
-      path:"/finance",
-      name: "finance",
-      component: GuestFinance
+        path: "/testimonies",
+        name: "testimonies",
+        component: GuestTestimonies,
     },
 
     {
-      path:"/openrecruitments",
-      name: "openrecruitments",
-      component: GuestOpenRecruitment
+        path: "/finance",
+        name: "finance",
+        component: GuestFinance,
     },
 
     {
-      path:"/volunteers",
-      name: "volunteers",
-      component: GuestVolunteer
+        path: "/openrecruitments",
+        name: "openrecruitments",
+        component: GuestOpenRecruitment,
     },
-  ]
+
+    {
+        path: "/volunteers",
+        name: "volunteers",
+        component: GuestVolunteer,
+    },
+
+    {
+        path: "/adminfinance",
+        name: "AdminFinance",
+        component: AdminFinance,
+    },
+
+    {
+        path: "/adminProject",
+        name: "AdminProject",
+        component: AdminProject,
+    },
+];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  linkActiveClass:'active'
-})
+    history: createWebHistory(),
+    routes,
+    linkActiveClass: "active",
+});
 
-export default router 
+export default router;

@@ -15,7 +15,18 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('user:id,name')->withCount('volunteers')->latest()->paginate(3);
+        $projects = Project::all();
+        return response()->json($projects);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexProject()
+    {
+        $projects = Project::all();
         return response()->json($projects);
     }
 
@@ -64,11 +75,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-       
-       $project = Project::with('user:id,name')->withCount('volunteers')->findOrFail($id);
-        return $project;
+        //
     }
 
     /**

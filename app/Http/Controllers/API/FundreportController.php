@@ -13,6 +13,17 @@ class FundreportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $fundreports = Fundreport::all();
+        return response()->json($fundreports);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexFinance()
     {
         $fundreports = Fundreport::all();
@@ -41,10 +52,10 @@ class FundreportController extends Controller
         $this->validate($request,[
             'date' => 'required|date|max:191',
             'notes' => 'required|string|max:191',
-            'debit' => 'required|numeric|max:191',
+            'debit' => 'required|numeric',
             'source' => 'required|string|max:191',
-            'kredit' => 'required|numeric|max:191',
-            'saldo' => 'required|numeric|max:191',
+            'kredit' => 'required|numeric',
+            'saldo' => 'required|numeric',
         ]);
 
         return Fundreport::create([
@@ -92,10 +103,10 @@ class FundreportController extends Controller
         $this->validate($request,[
             'date' => 'required|date|max:191',
             'notes' => 'required|string|max:191',
-            'debit' => 'required|numeric|max:191',
+            'debit' => 'required|numeric',
             'source' => 'required|string|max:191',
-            'kredit' => 'required|numeric|max:191',
-            'saldo' => 'required|numeric|max:191',
+            'kredit' => 'required|numeric',
+            'saldo' => 'required|numeric',
         ]);
 
         $fundreport->update($request->all());

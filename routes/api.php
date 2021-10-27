@@ -42,4 +42,5 @@ Route::apiResource('articles', ArticleController::class);
 Route::apiResource('merchandises', MerchandiseController::class); 
 Route::get('/donationGuest', [DonationController::class,'indexDonations']); 
 Route::apiResource('/donations', DonationController::class); 
-Route::apiResource('/adminProject', ProjectController::class); 
+Route::apiResource('/adminfinance',FundreportController::class);
+Route::apiResource('/adminproject',ProjectController::class);
