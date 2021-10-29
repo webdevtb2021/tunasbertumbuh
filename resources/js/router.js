@@ -14,6 +14,7 @@ import GuestFinance from "./guest/finance";
 import GuestOpenRecruitment from "./guest/openrecruitments";
 import GuestVolunteer from "./guest/volunteers";
 import AdminFinance from "./admin/adminFinance";
+import adminVolunteer from "./admin/adminVolunteer";
 
 const routes = [
   {
@@ -106,6 +107,12 @@ const routes = [
       path:"/adminfinance",
       name: "AdminFinance",
       component: AdminFinance
+    },
+
+    {
+      path:"/adminvolunteer",
+      name: "AdminVolunteer",
+      component: adminVolunteer
     },
   ]
 
