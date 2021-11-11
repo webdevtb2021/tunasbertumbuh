@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Volunteer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class VolunteerController extends Controller
 {
@@ -16,8 +19,12 @@ class VolunteerController extends Controller
      */
     public function index()
     {
-        $volunteers = Volunteer::all();
-        return response()->json($volunteers);
+        $volunteers = Volunteer::with('project:id,title')->orderBy('name','ASC')->get();
+        $projects = Project::orderBy('created_at','ASC')->select('id','title')->get();
+        $data=null;
+        $data["volunteers"] = $volunteers;
+        $data["projects"] = $projects;
+        return response()->json($data);
     }
 
     /**
@@ -48,20 +55,18 @@ class VolunteerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {  
         $this->validate($request,[
             'name' => 'required|string',
-            'url' => 'required|string',
-            'notes' => 'required|string',
             'status' => 'required|numeric',
             'project_id' => 'required|numeric',
+            'image' => 'required'
         ]);
-
-        // $image = $request->image;
-        // $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
-        // $img = Image::make($image->getRealPath());
-        // $img->stream();
-        // Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
+        $image = $request->image;
+        $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
+        $img = Image::make($image->getRealPath());
+        $img->stream();
+        Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
 
         return Volunteer::create([      
             'name' => $request->name,
@@ -69,8 +74,7 @@ class VolunteerController extends Controller
             'notes' => $request->notes,            
             'status' => $request->status,
             'project_id' => $request->project_id,
-            // 'image' => $filename,
-            // 'project_id' => $project_id,
+            'image' => $filename
         ]);
     }
 
@@ -108,31 +112,36 @@ class VolunteerController extends Controller
         $volunteer = Volunteer::findOrFail($id);
         $this->validate($request,[
             'name' => 'required|string',
-            'url' => 'required|string',
-            'notes' => 'required|string',
             'status' => 'required|numeric',
             'project_id' => 'required|numeric',
         ]);
+        if($request->image == 'null'){
+            $volunteer->update([
+                'name' => $request->name,
+                'url' => $request->url,
+                'notes' => $request->notes,
+                'status' => $request->status,
+                'project_id' => $request->project_id,
+            ]);
+            $volunteer->save();
+        }
+        else{
+            $image = $request->image;
+            $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
 
-        // $path = public_path()."/images/volunteers/".$volunteer->image;
-        // unlink($path);
-
-        // $image = $request->image;
-        // $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
-        // $img = Image::make($image->getRealPath());
-        // $img->stream();
-        // Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
-
-        $volunteer->update([
-            'name' => $request->name,
-            'url' => $request->url,
-            'notes' => $request->notes,
-            'status' => $request->status,
-            'project_id' => $request->project_id,
-            // 'image' => $filename,
-            // 'project_id' => $project_id,
-        ]);
-        $volunteer->save();
+            $volunteer->update([
+                'name' => $request->name,
+                'url' => $request->url,
+                'notes' => $request->notes,
+                'status' => $request->status,
+                'project_id' => $request->project_id,
+                'image' => $filename
+            ]);
+            $volunteer->save();
+        }        
         return $volunteer;
     }
 
@@ -148,12 +157,5 @@ class VolunteerController extends Controller
         $volunteer->delete();
 
         return $volunteer;
-    }
-
-    public function getProject()
-    {
-        $data = Project::get();
-        
-        return response()->json($data);
     }
 }

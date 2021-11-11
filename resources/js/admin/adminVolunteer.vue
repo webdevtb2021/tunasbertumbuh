@@ -1,5 +1,4 @@
 <template>
-
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -13,30 +12,32 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table w-100" id="adminVolunteerTable" v-if="data">
+                    <table class="table w-100" id="adminVolunteerTable" v-if="data.volunteers">
                         <thead>
                             <tr>
                                 <th scope="col">Nama</th>
-                                <th scope="col">URL</th>
+                                <th scope="col">Link to sosmed</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Note</th>
                                 <th scope="col">Project</th>
-                                <th ></th>
-                                <th ></th>
+                                <th >Detail</th>
+                                <th >Edit</th>
+                                <th >Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(d, index) in data" :key="index">
-                                <td>
-                                    <div class="col-md-2 px-4" style="border-radius: 7px;">
-                                        <profile :image="'storage/app/images/volunteers/0eaf56e0338386c4f25f5c77325021dd.png'"></profile>
-                                    </div>
-                                    {{ d.name }}
-                                </td>
+                            <tr v-for="(d, index) in data.volunteers" :key="index">
+                                <td>{{ d.name }} </td>
                                 <td>{{ d.url }}</td>
-                                <td>{{ d.status }}</td>
-                                <td>{{ d.notes }}</td>
-                                <td>{{ d.project_id }}</td>
+                                <td>
+                                    <small class="badge badge-success" v-if="d.status==1">Aktif</small>
+                                    <small class="badge badge-danger" v-else>Tidak Aktif</small>
+                                </td>
+                                <td>{{ d.project.title }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-link" @click.prevent="detailData(d)">
+                                        <i class="fas fa-info-circle text-success"/>
+                                    </button>
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-link" @click.prevent="editData(d)">
                                         <i class="fas fa-edit text-warning"/>
@@ -67,10 +68,24 @@
                   <!-- Form for adding/updating user details. When submitted call /createData() function if /isFormCreateMode value is true. Otherwise call /updateData() function. -->
                   <form @submit.prevent="isFormCreateMode ? createData() : updateData()">
                     <div class="modal-body">
-                        <!-- <div class="form-group">
-                            <label for="inputPhoto">Upload Foto Profile</label>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input v-model="form.name" type="text" name="name" class="form-control" placeholder="Name" aria-label="name" aria-describedby="basic-addon1"/>                           
+                                </div>
+                            </div>
+                            <div v-show="!isFormCreateMode"  class="col-4">
+                                <img class="profile-user-img img-fluid img-circle"
+                                   :src="'storage/images/volunteers/'+form.image"
+                                   alt="User profile picture">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Change Image</label>
                             <div class="input-group">
                                 <el-upload
+                                    :ref="upload"
                                     action="/"
                                     list-type="picture-card"
                                     :limit= 1
@@ -82,26 +97,22 @@
                                     <i class="el-icon-plus"></i>
                                 </el-upload>
                                 <el-dialog v-model="dialogVisible">
-                                    <img width="100%" :src="dialogImageUrl" alt="" />
+                                    <img width="100%" :src="dialogImageUrl" alt=""/>
                                 </el-dialog>
                             </div>
                             <small id="emailHelp" class="form-text text-muted">*Jenis file harus jpeg, jpg, jpe, png.</small>
-                        </div> -->
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input v-model="form.name" type="text" name="name" class="form-control" placeholder="Name" aria-label="name" aria-describedby="basic-addon1"/>
                         </div>
+
                         <div class="form-group">
                             <label>URL</label>
                             <input v-model="form.url" type="text" name="url" class="form-control" placeholder="URL" aria-label="url" aria-describedby="basic-addon1"/>
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select class="form-control" id="status">
-                                <option value="1">Nonktif</option>
-                                <option value="2">Aktif</option>
+                            <select class="form-control" v-model="form.status">
+                                <option value="1">Aktif</option>
+                                <option value="0">Nonaktif</option>
                             </select>
-                            <!-- <input v-model="form.status" type="number" name="status" class="form-control" placeholder="Status" aria-label="status" aria-describedby="basic-addon1"/> -->
                         </div>
                         <div class="form-group">
                           <label>Notes</label>
@@ -109,11 +120,9 @@
                         </div>
                         <div class="form-group">
                           <label>Project</label>
-                            <!-- <select class='form-control' v-model='project'>
-                                <option value='0' >Select Project</option>
-                                <option v-for='data in projects' :value='data.id'>{{ data.name }}</option>
-                            </select> -->
-                          <input v-model="form.project_id" type="number" name="project_id" class="form-control" placeholder="Project" aria-label="project_id" aria-describedby="basic-addon1"/>
+                            <select class='form-control' v-model='form.project.id'>
+                                <option v-for='p in data.projects' :value='p.id'>{{ p.title }}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -124,7 +133,15 @@
                   </form>
                 </div>
               </div>
-            </div>  
+            </div> 
+            <!-- Modal containing dynamic form for displaying data details. -->
+            <div class="modal fade" id="exampleModalDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelDetails" aria-hidden="true"> 
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" :key="detail.id">
+                    <user-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Volunteer"></user-details>
+                </div>
+              </div>
+            </div> 
         </div>
     </div>
 
@@ -135,13 +152,14 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
+import userDetails from '../components/userDetails.vue'
 
 export default {
+    
+    components:{userDetails},
 
     data() {
       return {
-        // project: 0,
-        // projects: [],
         data:{},
         form: new Form({
           id:'',
@@ -150,9 +168,24 @@ export default {
           url: '',
           status: '',
           notes: '',
-          project_id: ''
+          project:{
+            id:'',
+            title:''
+          }
         }),
-        isFormCreateMode: true
+        isFormCreateMode: true,
+        detail:{
+            id:'',
+            name: '',
+            image: '',
+            ig: '',
+            status: '',
+            notes: '',
+            position:'',
+        },
+        dialogImageUrl: '',
+        dialogVisible: false,
+        imageUpload:null
       }
     },
 
@@ -173,13 +206,6 @@ export default {
     },
 
     methods: {
-        // getProject: function(){
-        //     axios.get('/get_project')
-        //         .then(function (response) {
-        //             this.projects = response.data;
-        //         }.bind(this));
-        // },
-
         getData() {
             axios.get(this.endpoint)
             .then((response)=>{
@@ -193,21 +219,42 @@ export default {
         showModal() {
             this.isFormCreateMode = true;
             this.form.reset(); // v form reset
+            dialogImageUrl = ''
+            dialogVisible = false
+            imageUpload =null
+            this.$refs.upload.clearFiles();
             $('#exampleModal').modal('show'); 
         },
 
         createData(){
-            this.form.post(this.endpoint,{})
-            .then(()=>{
-                $('#exampleModal').modal('hide');
+            const formData = new FormData()
+            formData.append('name', this.form.name)
+            formData.append('url', this.form.url)
+            formData.append('status', this.form.status)
+            formData.append('notes', this.form.notes)
+            formData.append('project_id', this.form.project.id)
+            formData.append('image',this.imageUpload)
+
+            axios.post(this.endpoint, formData,{
+                headers:{'Content-Type':'multipart/form-data'}
+            })
+            .then(() => {
+               $('#exampleModal').modal('hide');
                 swal.fire({
                     icon:'success',
                     title:'Data volunteer created successfully'
                 })
                 this.getData();
-            }).catch(()=>{
-                console.log('submit failed');
-            });
+            })
+            .catch(({ response }) => {
+               console.log(response);
+               swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: 'Please contact web development team for details'
+                });
+            })
         },
 
         editData(d){
@@ -218,24 +265,47 @@ export default {
             this.form.fill(d);
         },
 
+        detailData(d){
+            this.detail.id = d.id;
+            this.detail.image = 'public/storage/images/volunteers/'+d.image;
+            this.detail.name = d.name;
+            this.detail.ig=d.url;
+            this.detail.position = 'Volunteers - '+d.project.title;
+            this.detail.status=d.status;
+            this.detail.notes=d.notes;
+            $('#exampleModalDetails').modal('show');
+        },
+
         updateData(){
-            console.log(this.form.id)
-            this.form.put(this.endpoint + '/' + this.form.id,{})
-            .then(()=>{
-                $('#exampleModal').modal('hide');
+            const formData = new FormData()
+            formData.append('name', this.form.name)
+            formData.append('url', this.form.url)
+            formData.append('status', this.form.status)
+            formData.append('notes', this.form.notes)
+            formData.append('project_id', this.form.project.id)
+            formData.append('image',this.imageUpload)
+            formData.append('_method', 'PUT');
+
+            axios.post(this.endpoint +'/'+ this.form.id, formData,{
+                headers:{'Content-Type':'multipart/form-data'}
+            })
+            .then(() => {
+               $('#exampleModal').modal('hide');
                 swal.fire({
                     icon:'success',
                     title:'Data volunteer updated successfully'
                 })
                 this.getData();
-            }).catch(()=>{
-                swal.fire({
+            })
+            .catch(({ response }) => {
+               console.log(response);
+               swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Something went wrong!',
                     footer: 'Please contact web development team for details'
                 });
-            });
+            })
         },
 
         deleteData(id){
@@ -266,6 +336,21 @@ export default {
                     });
                 }
             })
+        },
+
+        handlePictureCardPreview(file) {
+          this.dialogImageUrl = file.url
+          this.dialogVisible = true
+          this.imageUpload=file
+        },
+
+        updateImage (file) {
+          this.imageUpload=file.raw
+        },
+
+        handleExceed(){
+          this.$message.error("Anda hanya diperbolehkan upload 1 gambar volunteer");
+          return false;
         },
     },  
 };

@@ -270,18 +270,6 @@ export default {
         },
 
         handleSubmit(){
-          console.log(this.name1+"-"+
-                  this.name2+"-"+
-                  this.email+"-"+
-                  this.address+"-"+
-                  this.phone+"-"+
-                  this.categoryDonasi+"-"+
-                  this.uangNominal+"-"+
-                  this.uangInputNominal+"-"+
-                  this.caraBayar+"-"+
-                  this.jenisBarang+"-"+
-                  this.catatan);
-
           const formData = new FormData()
           formData.append('name', this.name1+" "+this.name2)
           formData.append('email', this.email)
@@ -301,8 +289,6 @@ export default {
               formData.append('notes', this.catatan)
           }
           formData.append('image',this.imageUpload)
-
-          console.log(this.imageUpload);
 
           axios.post('../api/donations', formData,{
                 headers:{'Content-Type':'multipart/form-data'}
