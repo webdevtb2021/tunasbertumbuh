@@ -119,7 +119,7 @@
                           <input v-model="form.notes" type="text" name="notes" class="form-control" placeholder="Notes" aria-label="notes" aria-describedby="basic-addon1"/>
                         </div>
                         <div class="form-group">
-                          <label>Project</label>
+                            <label>Project</label>
                             <select class='form-control' v-model='form.project.id'>
                                 <option v-for='p in data.projects' :value='p.id'>{{ p.title }}</option>
                             </select>

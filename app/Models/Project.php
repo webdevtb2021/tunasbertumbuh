@@ -24,7 +24,6 @@ class Project extends Model
         return $this->hasMany(Volunteer::class);
     }
 
-
     public function getExcerptAttribute()
     {
         return $this->excerpt(250);
