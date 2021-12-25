@@ -16,6 +16,8 @@ import GuestVolunteer from "./guest/volunteers";
 import AdminFinance from "./admin/adminFinance";
 import adminVolunteer from "./admin/adminVolunteer";
 import adminDivision from "./admin/adminDivision";
+import adminMember from "./admin/adminMember";
+import adminMemberDetail from "./admin/adminPosition";
 
 const routes = [
   {
@@ -120,6 +122,18 @@ const routes = [
       path:"/admindivision",
       name: "AdminDivision",
       component: adminDivision
+    },
+
+    {
+      path:"/adminmember",
+      name: "AdminMember",
+      component: adminMember
+    },
+    {
+      path:"/adminmember/:id", 
+      component: adminMemberDetail,
+      name: 'adminmember.show',
+      props: true
     },
   ]
 

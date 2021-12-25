@@ -65,7 +65,7 @@
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <!-- Form for adding/updating user details. When submitted call /createData() function if /isFormCreateMode value is true. Otherwise call /updateData() function. -->
+                  <!-- Form for adding/updating volunteer details. When submitted call /createData() function if /isFormCreateMode value is true. Otherwise call /updateData() function. -->
                   <form @submit.prevent="isFormCreateMode ? createData() : updateData()">
                     <div class="modal-body">
                         <div class="row">
@@ -138,7 +138,7 @@
             <div class="modal fade" id="exampleModalDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelDetails" aria-hidden="true"> 
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" :key="detail.id">
-                    <user-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Volunteer"></user-details>
+                    <volunteer-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Volunteer"></volunteer-details>
                 </div>
               </div>
             </div> 
@@ -152,11 +152,11 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-import userDetails from '../components/userDetails.vue'
+import volunteerDetails from '../components/volunteerDetails.vue'
 
 export default {
     
-    components:{userDetails},
+    components:{volunteerDetails},
 
     data() {
       return {
@@ -219,9 +219,9 @@ export default {
         showModal() {
             this.isFormCreateMode = true;
             this.form.reset(); // v form reset
-            dialogImageUrl = ''
-            dialogVisible = false
-            imageUpload =null
+            this.dialogImageUrl = ''
+            this.dialogVisible = false
+            this.imageUpload =null
             this.$refs.upload.clearFiles();
             $('#exampleModal').modal('show'); 
         },

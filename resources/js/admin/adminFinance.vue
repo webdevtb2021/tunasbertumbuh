@@ -236,9 +236,6 @@ export default {
                 }
             })
         },
-    },
-
-
-    
+    },    
 };
 </script>

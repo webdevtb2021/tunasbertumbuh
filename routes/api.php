@@ -45,3 +45,5 @@ Route::apiResource('/donations', DonationController::class);
 Route::apiResource('/adminfinance',FundreportController::class);
 Route::apiResource('/adminvolunteer',VolunteerController::class);
 Route::apiResource('/admindivision',DivisionController::class);
+Route::apiResource('/adminmember',UserController::class);
+Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 

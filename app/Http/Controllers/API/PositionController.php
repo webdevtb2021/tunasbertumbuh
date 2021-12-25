@@ -16,8 +16,6 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $positions = Position::with(['division','user','manager'])->latest()->paginate(10);
-        return response()->json($positions);
     }
 
     /**
@@ -38,16 +36,19 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request,[
-            'angkatan' => 'required|numeric',
+            'jabatan_id' => 'required|numeric',
+            'division_id' => 'required|numeric',
+            'periode_id' => 'required|numeric',
+            'leader' => 'required|numeric',
         ]);
 
         return Position::create([
             'user_id' =>  $request->user_id,
-            'angkatan' => $request->angkatan,
-            'manager_id' =>  $request->manager_id,
-            'division_id' => $request->division_id,
+            'jabatan_id' => $request->jabatan_id,
+            'division_id' =>  $request->division_id,
+            'periode_id' => $request->periode_id,
+            'leader' => $request->leader,
         ]);
     }
 
@@ -80,18 +81,22 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $userid,$id)
     {
         $position = Position::findOrFail($id);
         $this->validate($request,[
-            'angkatan' => 'required|numeric',
+            'jabatan_id' => 'required|numeric',
+            'division_id' => 'required|numeric',
+            'periode_id' => 'required|numeric',
+            'leader' => 'required|numeric',
         ]);
 
         $position->update([
             'user_id' =>  $request->user_id,
-            'angkatan' => $request->angkatan,
-            'manager_id' =>  $request->manager_id,
-            'division_id' => $request->division_id,
+            'jabatan_id' => $request->jabatan_id,
+            'division_id' =>  $request->division_id,
+            'periode_id' => $request->periode_id,
+            'leader' => $request->leader,
         ]);
         $position->save();
         return $position;
@@ -103,7 +108,7 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($userid, $id)
     {
         $position = Position::findOrFail($id);
         $position->delete();
