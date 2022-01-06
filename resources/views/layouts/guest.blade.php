@@ -88,17 +88,18 @@
                         class="dropdown-menu"
                         aria-labelledby="navbarDropdown"
                       >
-                        <a
-                          class="dropdown-item"
-                          href="../autentifikasi/login.html"
-                          >Sign In</a
-                        >
+                        {{-- <a class="dropdown-item" href="../autentifikasi/login.html" >Sign In</a> --}}
+
+                        <router-link :to="{ name: 'login' }" class="dropdown-item">Sign In</router-link>
+                        
                         <div class="dropdown-divider"></div>
-                        <a
+                        {{-- <a
                           class="dropdown-item"
                           href="../autentifikasi/register.html"
                           >Register</a
-                        >
+                        > --}}
+                        <router-link :to="{ name: 'register' }" class="dropdown-item">Register</router-link>
+                        <router-link :to="{ name: 'logout' }" class="dropdown-item">Logout</router-link>
                       </div>
                     </li>
                   </ul>
@@ -157,6 +158,17 @@
 
     <!-- REQUIRED SCRIPTS -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+      function logout() {
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_name");
+        localStorage.removeItem("user_email");
+        localStorage.removeItem("user_status");
+        localStorage.removeItem("user_permission");
 
+        alert("data cleared please refresh")
+      }
+    </script>
   </body>
 </html>
