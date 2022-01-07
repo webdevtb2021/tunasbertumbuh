@@ -15,6 +15,7 @@ use App\Http\Controllers\API\FundreportController;
 use App\Http\Controllers\API\VolunteerController;
 use App\Http\Controllers\API\DonationController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,4 +45,7 @@ Route::get('/donationGuest', [DonationController::class,'indexDonations']);
 Route::apiResource('/donations', DonationController::class); 
 Route::apiResource('/adminfinance',FundreportController::class);
 Route::apiResource('/adminvolunteer',VolunteerController::class);
-Route::get('get_project', [VolunteerController::class, 'getProject']);
+Route::apiResource('/admindivision',DivisionController::class);
+Route::apiResource('/adminmember',UserController::class);
+Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 
+Route::apiResource('/adminpartnership',PartnershipController::class);

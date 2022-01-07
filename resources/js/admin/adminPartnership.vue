@@ -3,7 +3,7 @@
         <div>
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h3 >Data Volunteer</h3>
+                    <h3 >Data Partnership</h3>
                     <div class="card-tools ml-auto ">
                         <div class="input-group input-group-sm">
                           <!-- Button New -->
@@ -12,27 +12,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table w-100" id="adminVolunteerTable" v-if="data.volunteers">
+                    <table class="table w-100" id="adminPartnershipTable" v-if="data.partnerships">
                         <thead>
                             <tr>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Link to sosmed</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Project</th>
                                 <th >Detail</th>
                                 <th >Edit</th>
                                 <th >Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(d, index) in data.volunteers" :key="index">
+                            <tr v-for="(d, index) in data.partnerships" :key="index">
                                 <td>{{ d.name }} </td>
                                 <td>{{ d.url }}</td>
                                 <td>
                                     <small class="badge badge-success" v-if="d.status==1">Aktif</small>
                                     <small class="badge badge-danger" v-else>Tidak Aktif</small>
                                 </td>
-                                <td>{{ d.project.title }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-link" @click.prevent="detailData(d)">
                                         <i class="fas fa-info-circle text-success"/>
@@ -59,8 +57,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <!-- Show/hide headings dynamically based on /isFormCreateMode value (true/false) -->
-                    <h5 v-show="isFormCreateMode" class="modal-title" id="exampleModalLabel">Add new data Volunteer</h5>
-                    <h5 v-show="!isFormCreateMode" class="modal-title" id="exampleModalLabel">Update data Volunteer</h5>
+                    <h5 v-show="isFormCreateMode" class="modal-title" id="exampleModalLabel">Add new data Partnership</h5>
+                    <h5 v-show="!isFormCreateMode" class="modal-title" id="exampleModalLabel">Update data Partnership</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -77,7 +75,7 @@
                             </div>
                             <div v-show="!isFormCreateMode"  class="col-4">
                                 <img class="profile-user-img img-fluid img-circle"
-                                   :src="'storage/images/volunteers/'+form.image"
+                                   :src="'storage/images/partnerships/'+form.image"
                                    alt="User profile picture">
                             </div>
                         </div>
@@ -118,12 +116,6 @@
                           <label>Notes</label>
                           <input v-model="form.notes" type="text" name="notes" class="form-control" placeholder="Notes" aria-label="notes" aria-describedby="basic-addon1"/>
                         </div>
-                        <div class="form-group">
-                            <label>Project</label>
-                            <select class='form-control' v-model='form.project.id'>
-                                <option v-for='p in data.projects' :value='p.id'>{{ p.title }}</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -138,7 +130,7 @@
             <div class="modal fade" id="exampleModalDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelDetails" aria-hidden="true"> 
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" :key="detail.id">
-                    <user-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Volunteer"></user-details>
+                    <user-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Partnership"></user-details>
                 </div>
               </div>
             </div> 
@@ -168,10 +160,6 @@ export default {
           url: '',
           status: '',
           notes: '',
-          project:{
-            id:'',
-            title:''
-          }
         }),
         isFormCreateMode: true,
         detail:{
@@ -191,7 +179,7 @@ export default {
 
     computed: {
         endpoint() {
-            return `/api/adminvolunteer`;
+            return `/api/adminpartnership`;
         },
     },
 
@@ -200,7 +188,7 @@ export default {
         .then((response)=>{
             this.data = response.data;
             this.$nextTick(function() {
-                $('#adminVolunteerTable').DataTable();
+                $('#adminPartnershipTable').DataTable();
             })
         })
     },
@@ -211,7 +199,7 @@ export default {
             .then((response)=>{
                 this.data = response.data;
                 this.$nextTick(function() {
-                    $('#adminVolunteerTable').DataTable();
+                    $('#adminPartnershipTable').DataTable();
                 })
             })
         },
@@ -232,7 +220,6 @@ export default {
             formData.append('url', this.form.url)
             formData.append('status', this.form.status)
             formData.append('notes', this.form.notes)
-            formData.append('project_id', this.form.project.id)
             formData.append('image',this.imageUpload)
 
             axios.post(this.endpoint, formData,{
@@ -242,7 +229,7 @@ export default {
                $('#exampleModal').modal('hide');
                 swal.fire({
                     icon:'success',
-                    title:'Data volunteer created successfully'
+                    title:'Data partnership created successfully'
                 })
                 this.getData();
             })
@@ -267,10 +254,10 @@ export default {
 
         detailData(d){
             this.detail.id = d.id;
-            this.detail.image = 'public/storage/images/volunteers/'+d.image;
+            this.detail.image = 'public/storage/images/partnerships/'+d.image;
             this.detail.name = d.name;
             this.detail.ig=d.url;
-            this.detail.position = 'Volunteers - '+d.project.title;
+            this.detail.position = 'Partnerships - '+d.project.title;
             this.detail.status=d.status;
             this.detail.notes=d.notes;
             $('#exampleModalDetails').modal('show');
@@ -282,7 +269,6 @@ export default {
             formData.append('url', this.form.url)
             formData.append('status', this.form.status)
             formData.append('notes', this.form.notes)
-            formData.append('project_id', this.form.project.id)
             formData.append('image',this.imageUpload)
             formData.append('_method', 'PUT');
 
@@ -293,7 +279,7 @@ export default {
                $('#exampleModal').modal('hide');
                 swal.fire({
                     icon:'success',
-                    title:'Data volunteer updated successfully'
+                    title:'Data partnership updated successfully'
                 })
                 this.getData();
             })
@@ -349,7 +335,7 @@ export default {
         },
 
         handleExceed(){
-          this.$message.error("Anda hanya diperbolehkan upload 1 gambar volunteer");
+          this.$message.error("Anda hanya diperbolehkan upload 1 gambar partnership");
           return false;
         },
     },  
