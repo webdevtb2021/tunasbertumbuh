@@ -18,7 +18,7 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $donations = Donation::with('donator')->latest()->paginate(10);
+        $donations = Donation::with('donator:id,name,phone,email')->select('id','created_at','donator_id','category','verification','jenis_barang_or_jumlah_bayar')->get();
         return response()->json($donations);
     }
 
@@ -81,9 +81,12 @@ class DonationController extends Controller
      * @param  \App\Models\Donation  $donation
      * @return \Illuminate\Http\Response
      */
-    public function show(Donation $donation)
-    {
-        //
+    public function show($id)
+    {        
+
+        $donations = Donation::findOrFail($id);
+        $donations->donator;
+        return response()->json($donations);
     }
 
     /**

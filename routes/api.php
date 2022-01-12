@@ -48,3 +48,4 @@ Route::apiResource('/admindivision',DivisionController::class);
 Route::apiResource('/adminmember',UserController::class);
 Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 
 Route::apiResource('/adminmerchandise', MerchandiseController::class); 
+Route::apiResource('/admindonation', DonationController::class); 
