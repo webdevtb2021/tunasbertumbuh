@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class ArticleController extends Controller
 {
@@ -14,6 +17,12 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $articles = Article::with(['user:id,name','articleImages'])->get();
+        return response()->json($articles);
+    }
+
+    public function indexArticles()
     {
         $articles = Article::with(['user:id,name','articleImages'])->latest()->paginate(10);
         return response()->json($articles);
@@ -37,7 +46,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request,[
             'title' => 'required|string',
             'body' => 'required|string',
@@ -100,9 +108,40 @@ class ArticleController extends Controller
             'body' => 'required|string',
         ]);
 
-        $article->update($request->all());
+        $article->update([
+            'title' =>  $request->title,
+            'body' => $request->body,
+        ]);
         $article->save();
-        return $article;
+        $articleIds = $article->articleImages->pluck('id')->toArray();
+        $imagesExist = $request->imagesExist;
+        if(count($articleIds) != 0){
+            if(!$imagesExist)
+                $imagesDiff = $articleIds;
+            else 
+                $imagesDiff = array_diff($articleIds,$imagesExist);
+            try {
+                $article->articleImages()->whereIn('id', $imagesDiff)->delete();
+            }
+            catch (\Exception $e) {
+            }   
+        }   
+
+        $images = $request->images;
+        $i = 0;
+
+        if($images != null){
+            foreach ($images as $image) {
+                $i++;            
+                $filename = $article->id.'_'.$i.'.'.$image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('public')->put('/images/articles/'.$filename,$img);
+                $article->articleImages()->create(['url_image'=>$filename]);
+            }
+        }
+
+        return response()->json($article);
     }
 
     /**

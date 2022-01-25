@@ -21,6 +21,8 @@ import adminMemberDetail from "./admin/adminPosition";
 import adminMerchandise from "./admin/adminMerchandise";
 import adminDonation from "./admin/adminDonation";
 import donationDetails from "./components/donationDetails";
+import adminArticle from "./admin/adminArticle";
+import articleDetails from "./components/articleDetails";
 
 const routes = [
   {
@@ -156,6 +158,20 @@ const routes = [
       path:"/admindonation/:id", 
       component: donationDetails,
       name: 'admindonation.show',
+      props: true
+    },
+
+
+    {
+      path:"/adminarticle",
+      name: "AdminArticle",
+      component: adminArticle
+    },
+
+    {
+      path:"/adminarticle/:id", 
+      component: articleDetails,
+      name: 'adminarticle.show',
       props: true
     },
   ]

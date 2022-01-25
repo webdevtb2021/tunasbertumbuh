@@ -26,7 +26,11 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
 
 app.use(ElementPlus)
-//use vue router
+
+import VuePictureSwipe from 'vue3-picture-swipe';
+app.component('vue-picture-swipe', VuePictureSwipe);
+
+
 app.use(router)
 
 app.mount('#app')
