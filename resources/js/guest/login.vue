@@ -45,7 +45,7 @@
 				<button @click="resetForm" class="btn btn-warning mt-1 ml-3" :disabled="disableButton">
                     Reset
                 </button>
-            
+				<router-link :to="{ name: 'Forgot Password' }" class="btn btn-white mt-1 ml-3">Forget Password</router-link>
         </div>
     </div>
 </template>
@@ -130,7 +130,7 @@ export default {
 	
 					var status = res.data.status; 
 	
-					if(status == "error"){
+					if(status 	== "error"){
 						swal.fire({
 							title: 'Error',
 							text:   res.data.message,

@@ -21,6 +21,8 @@ import adminDivision from "./admin/adminDivision";
 import Login from "./guest/login";
 import Logout from "./guest/logout";
 import Register from "./guest/register";
+import SendResetPassword from "./guest/sendResetPassword";
+import ResetPassword from "./guest/resetPassword";
 
 // 0: Have no access admin
 // 1: all access
@@ -183,6 +185,22 @@ const routes = [
 		name: "AdminDivision",
 		component: adminDivision,
 		meta: { authorize : [3] }
+	},
+
+	{
+		// Forgot Password
+		path:"/sendPassword",
+		name: "Forgot Password",
+		component: SendResetPassword,
+		meta: { authorize : [] }
+	},
+
+	{
+		// Reset Password
+		path:"/reset-password/:token",
+		name: "Reset Password",
+		component: ResetPassword,
+		meta: { authorize : [] }
 	},
   ]
 

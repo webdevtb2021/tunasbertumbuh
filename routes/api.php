@@ -14,7 +14,9 @@ use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\FundreportController;
 use App\Http\Controllers\API\VolunteerController;
 use App\Http\Controllers\API\DonationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +55,10 @@ Route::apiResource('/donations', DonationController::class);
 Route::apiResource('/adminfinance', FundreportController::class);
 Route::apiResource('/adminvolunteer', VolunteerController::class);
 Route::apiResource('/admindivision', DivisionController::class);
+
+// Route::get('/forget-password', [ForgotPasswordController::class, 'getEmail']);
+Route::post('/forget-password', [ForgotPasswordController::class, 'postEmail']);
+Route::post('/getEmail', [ForgotPasswordController::class, 'getEmailFromToken']);
+
+Route::put('/resetPassword',[ResetPasswordController::class, 'updatePassword']);
+// Route::get('/reset-password/{token}',[ResetPasswordController::class, 'getPassword']);
