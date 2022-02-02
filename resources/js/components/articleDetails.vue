@@ -4,6 +4,14 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h3 >{{getHeader()}}</h3>
+                    <div class="card-tools ml-auto ">
+                        <div class="input-group input-group-sm">
+                          <!-- Button New -->
+                            <router-link :to="{ name: 'AdminArticle' }" class="btn btn-success">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form @submit.prevent=" id ==='create' ? createData() : updateData()">
@@ -158,7 +166,7 @@ export default {
             formData.append('body', this.articles.body)
             
             for (var x = 0; x < this.imageUpload.length; x++) {
-              formData.append('images['+x+']',this.imageUpload[x]);
+              formData.append('images['+x+']',this.imageUpload[x].raw);
             }
             axios.post('/api/adminarticle', formData,{
                 headers:{'Content-Type':'multipart/form-data'}
@@ -169,7 +177,9 @@ export default {
                     icon:'success',
                     title:'Data Article created successfully'
                 })
-                this.$router.go({ name: 'adminarticle.show', params: { id: response.data.id }, query:{isEdit:false } })
+                this.$nextTick(function() {
+                    this.$router.go({ name: 'adminarticle.show', params: { id: response.data.id }, query:{isEdit:false } })
+                })
             })
             .catch(({ response }) => {
                console.log(response.data);
@@ -209,7 +219,9 @@ export default {
                     icon:'success',
                     title:'Verification updated successfully'
                 })
-                this.$router.go({ name: 'adminarticle.show', params: { id: response.data.id }, query:{isEdit:false } })
+                this.$nextTick(function() {
+                    this.$router.go({ name: 'adminarticle.show', params: { id: response.data.id }, query:{isEdit:false } })
+                })
             }).catch(()=>{
                 swal.fire({
                     icon: 'error',

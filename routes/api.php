@@ -33,7 +33,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/homepage', [App\Http\Controllers\API\HomepageController::class, 'index']);
 Route::apiResource('partnerships', PartnershipController::class); 
 Route::get('/volunteers', [VolunteerController::class, 'indexVolunteer']); 
-Route::apiResource('projects', ProjectController::class); 
+Route::get('/projects', [ProjectController::class,'indexProjects']); 
+Route::get('/projects/{id}', [ProjectController::class,'show']); 
 Route::get('/testimonies', [UserController::class,'indexTestimonies']); 
 Route::get('/members', [UserController::class,'indexMembers']); 
 Route::get('/members/{period}', [UserController::class,'indexMembers']); 
@@ -51,3 +52,4 @@ Route::apiResource('/adminmember/{userid}/adminposition', PositionController::cl
 Route::apiResource('/adminmerchandise', MerchandiseController::class); 
 Route::apiResource('/admindonation', DonationController::class); 
 Route::apiResource('/adminarticle', ArticleController::class); 
+Route::apiResource('/adminproject', ProjectController::class); 

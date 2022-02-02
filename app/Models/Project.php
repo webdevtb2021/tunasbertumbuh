@@ -10,7 +10,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable=['title','body','datetime','image'];
+    protected $fillable=['title','body','image','user_id'];
 
     protected $appends = ['createdDate','excerpt','bodyHtml'];
 

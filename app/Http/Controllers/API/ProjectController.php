@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class ProjectController extends Controller
 {
@@ -14,6 +17,15 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $projects = Project::with('user:id,name')->withCount('volunteers')->orderBy('id', 'DESC')->get();
+        return response()->json($projects);
+    }/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexProjects()
     {
         $projects = Project::with('user:id,name')->withCount('volunteers')->latest()->paginate(3);
         return response()->json($projects);
@@ -40,7 +52,6 @@ class ProjectController extends Controller
         $this->validate($request,[
             'title' => 'required|string',
             'body' => 'required|string',
-            'datetime' => 'required|date',
         ]);
 
         $image = $request->image;
@@ -52,7 +63,6 @@ class ProjectController extends Controller
         return Project::create([            
             'title' => $request->title,
             'body' => $request->body,
-            'datetime' => $request->datetime,
             'user_id' => $request->user_id,
             'image' => $filename,
         ]);
@@ -95,23 +105,26 @@ class ProjectController extends Controller
         $this->validate($request,[
             'title' => 'required|string',
             'body' => 'required|string',
-            'datetime' => 'required|date',
         ]);
 
-        $path = public_path()."/images/projects/".$project->image;
-        unlink($path);
-
-        $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/projects/'.$filename,$img);
-
+        if($request->imagesExist)
+            $filename = $request->imagesExist;
+        else{
+            if($request->images){
+                $image = $request->images;
+                $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('public')->put('/images/projects/'.$filename,$img);
+            }
+            else
+                $filename = null;
+        }
+            
+        
         $project->update([
             'title' => $request->title,
             'body' => $request->body,
-            'datetime' => $request->datetime,
-            'user_id' => $request->user_id,
             'image' => $filename,
         ]);
         $project->save();
