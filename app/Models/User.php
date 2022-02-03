@@ -45,7 +45,12 @@ class User extends Authenticatable
 
     public function positions()
     {
-        return $this->hasMany(Position::class,'user_id','id');
+        return $this->hasMany(Position::class,'user_id','id')->with('division:id,name','periode:id,name','jabatan:id,name','leader:id,name')->orderBy('id', 'DESC');
+    }
+
+    public function latestPositions()
+    {
+        return $this->hasOne(Position::class)->with('division:id,name','periode:id,name','jabatan:id,name')->orderBy('id', 'DESC');
     }
 
     public function managers()
@@ -66,5 +71,10 @@ class User extends Authenticatable
     public function dependences()
     {
         return $this->hasMany(Dependence::class);
+    }
+
+    public function latestDependences()
+    {
+        return $this->hasOne(Dependence::class)->orderBy('created_at', 'DESC');
     }
 }

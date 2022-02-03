@@ -10,17 +10,10 @@
             <div class="row">
                 <div class="col">
                     <div class="card py-3">
-                        <div class="card-body">
-                            <Carousel v-if="data.article_images.length" :autoplay="3000" :wrap-around="true">
-                              <Slide v-for="(images, index) in data.article_images" :key="index"> 
-                                <img :src="'../storage/images/articles/'+images.url_image" :alt="images.url_image" /> 
-                              </Slide>
-                              <template #addons>
-                                  <Pagination />
-                              </template>
-                            </Carousel>
-
+                        <div class="card-body justify-content-center">
                             <p class="card-text overflow-hidden" v-html="data.bodyHtml"></p>
+                            <vue-picture-swipe :items="getImagesList()"></vue-picture-swipe> 
+                            <br/>
                         </div>
                     </div>
                 </div>
@@ -31,23 +24,34 @@
 
 <script>
 import guest from '../mixins/guest';
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
-import 'vue3-carousel/dist/carousel.css';
 export default {
 	
 	mixins:[guest],
-    components: {
-        Carousel,
-        Slide,
-        Pagination,
-        Navigation
-    },
     props:['id'],
+    
+    data() {
+      return {
+        imagesList:[],
+      }
+    },
+
     computed:{
         endpoint () {
             return `/api/articles/${this.id}`;
         },
-    }
+    },
+
+    methods: {
+        getImagesList(){
+            this.imagesList=[];
+            for(let i = 0; i < this.data.article_images.length; i++){
+                this.imagesList.push({src: '../storage/images/articles/'+this.data.article_images[i].url_image,thumbnail: '../storage/images/articles/'+this.data.article_images[i].url_image,w: 1200,h: 900
+                });
+            }
+            return this.imagesList;
+        }
+    },
+
     
 }
 </script>

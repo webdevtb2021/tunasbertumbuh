@@ -9,7 +9,7 @@ class Volunteer extends Model
 {
     use HasFactory;
 
-     protected $fillable=['name','image','url', 'status', 'notes'];
+     protected $fillable=['name','image','url', 'status', 'notes', 'project_id'];
 
     public function project()
     {

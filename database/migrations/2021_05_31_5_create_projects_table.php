@@ -17,7 +17,6 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->timestamp('datetime');
             $table->text('body');
             $table->text('image');
            /* $table->integer('fee_perpax');

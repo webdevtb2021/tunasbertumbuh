@@ -12,25 +12,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table w-100" id="adminPartnershipTable" v-if="data.partnerships">
+                    <table class="table w-100" id="adminPartnershipTable" v-if="data">
                         <thead>
                             <tr>
                                 <th scope="col">Nama</th>
+                                <th scope="col">Kategori</th>
                                 <th scope="col">Link to sosmed</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Keterangan</th>
                                 <th >Detail</th>
                                 <th >Edit</th>
                                 <th >Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(d, index) in data.partnerships" :key="index">
+                            <tr v-for="(d, index) in data" :key="index">
                                 <td>{{ d.name }} </td>
-                                <td>{{ d.url }}</td>
-                                <td>
-                                    <small class="badge badge-success" v-if="d.status==1">Aktif</small>
-                                    <small class="badge badge-danger" v-else>Tidak Aktif</small>
-                                </td>
+                                <td v-if="d.category==1">Community Partner</td>
+                                <td v-else>Media Partner</td>
+                                <td>{{ d.url }} </td>
+                                <td>{{ d.notes }} </td>
                                 <td>
                                     <button class="btn btn-sm btn-link" @click.prevent="detailData(d)">
                                         <i class="fas fa-info-circle text-success"/>
@@ -83,7 +83,7 @@
                             <label for="foto">Change Image</label>
                             <div class="input-group">
                                 <el-upload
-                                    :ref="upload"
+                                    ref="upload"
                                     action="/"
                                     list-type="picture-card"
                                     :limit= 1
@@ -106,15 +106,15 @@
                             <input v-model="form.url" type="text" name="url" class="form-control" placeholder="URL" aria-label="url" aria-describedby="basic-addon1"/>
                         </div>
                         <div class="form-group">
-                            <label>Status</label>
-                            <select class="form-control" v-model="form.status">
-                                <option value="1">Aktif</option>
-                                <option value="0">Nonaktif</option>
+                            <label>Kategori</label>
+                            <select class="form-control" v-model="form.category">
+                                <option value="1">Community Partner</option>
+                                <option value="2">Media Partner</option>
                             </select>
                         </div>
                         <div class="form-group">
-                          <label>Notes</label>
-                          <input v-model="form.notes" type="text" name="notes" class="form-control" placeholder="Notes" aria-label="notes" aria-describedby="basic-addon1"/>
+                          <label>Keterangan</label>
+                          <textarea v-model="form.notes" type="text" name="task" class="form-control" placeholder="Keterangan" aria-label="notes" aria-describedby="basic-addon1" :rows="10 "/>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -130,7 +130,7 @@
             <div class="modal fade" id="exampleModalDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelDetails" aria-hidden="true"> 
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" :key="detail.id">
-                    <user-details :image="detail.image" :name="detail.name" :ig="detail.ig" :position="detail.position" :status="detail.status" :notes="detail.notes" header="More Info about The Partnership"></user-details>
+                    <partnership-details :image="detail.image" :name="detail.name" :ig="detail.ig" :category="detail.category" :notes="detail.notes" header="More Info about The Partnership"></partnership-details>
                 </div>
               </div>
             </div> 
@@ -144,11 +144,11 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-import userDetails from '../components/userDetails.vue'
+import partnershipDetails from '../components/partnershipDetails.vue'
 
 export default {
     
-    components:{userDetails},
+    components:{partnershipDetails},
 
     data() {
       return {
@@ -158,7 +158,7 @@ export default {
           name: '',
           image: '',
           url: '',
-          status: '',
+          category: '',
           notes: '',
         }),
         isFormCreateMode: true,
@@ -167,9 +167,8 @@ export default {
             name: '',
             image: '',
             ig: '',
-            status: '',
+            category: '',
             notes: '',
-            position:'',
         },
         dialogImageUrl: '',
         dialogVisible: false,
@@ -210,7 +209,7 @@ export default {
             dialogImageUrl = ''
             dialogVisible = false
             imageUpload =null
-            this.$refs.upload.clearFiles();
+            this.$refs['upload'].clearFiles();
             $('#exampleModal').modal('show'); 
         },
 
@@ -218,7 +217,7 @@ export default {
             const formData = new FormData()
             formData.append('name', this.form.name)
             formData.append('url', this.form.url)
-            formData.append('status', this.form.status)
+            formData.append('category', this.form.category)
             formData.append('notes', this.form.notes)
             formData.append('image',this.imageUpload)
 
@@ -248,6 +247,10 @@ export default {
             this.isFormCreateMode=false;
             this.form.reset();
             this.form.clear();
+            this.dialogImageUrl = ''
+            this.dialogVisible = false
+            this.imageUpload =null
+            this.$refs['upload'].clearFiles();
             $('#exampleModal').modal('show'); 
             this.form.fill(d);
         },
@@ -257,8 +260,7 @@ export default {
             this.detail.image = 'public/storage/images/partnerships/'+d.image;
             this.detail.name = d.name;
             this.detail.ig=d.url;
-            this.detail.position = 'Partnerships - '+d.project.title;
-            this.detail.status=d.status;
+            this.detail.category = d.category==1 ? 'Community Partner' : 'Media Partner';
             this.detail.notes=d.notes;
             $('#exampleModalDetails').modal('show');
         },
@@ -267,7 +269,7 @@ export default {
             const formData = new FormData()
             formData.append('name', this.form.name)
             formData.append('url', this.form.url)
-            formData.append('status', this.form.status)
+            formData.append('category', this.form.category)
             formData.append('notes', this.form.notes)
             formData.append('image',this.imageUpload)
             formData.append('_method', 'PUT');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Partnership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class PartnershipController extends Controller
 {
@@ -96,14 +99,16 @@ class PartnershipController extends Controller
             'category' => 'required|string',
         ]);
 
-        $path = public_path()."/images/partnerships/".$partnership->image;
-        unlink($path);
 
-        $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/partnerships/'.$filename,$img);
+        if($request->image != 'null'){
+            $image = $request->image;
+            $filename = Str::slug($request->name).'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/partnerships/'.$filename,$img);
+        }
+        else
+            $filename = $partnership->image;
 
         $partnership->update([
             'name' => $request->name,

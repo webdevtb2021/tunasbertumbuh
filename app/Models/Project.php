@@ -10,7 +10,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable=['title','body','datetime','image'];
+    protected $fillable=['title','body','image','user_id'];
 
     protected $appends = ['createdDate','excerpt','bodyHtml'];
 
@@ -23,7 +23,6 @@ class Project extends Model
     {
         return $this->hasMany(Volunteer::class);
     }
-
 
     public function getExcerptAttribute()
     {
@@ -42,7 +41,7 @@ class Project extends Model
     
     public function getCreatedDateAttribute()
     {
-        return $this->created_at->diffForHumans();
+        return \Carbon\Carbon::parse($this->created_at)->diffForHumans();
     }
 
     public function getBodyHtmlAttribute()

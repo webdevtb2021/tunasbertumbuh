@@ -15,9 +15,17 @@ import GuestOpenRecruitment from "./guest/openrecruitments";
 import GuestVolunteer from "./guest/volunteers";
 import AdminFinance from "./admin/adminFinance";
 import adminVolunteer from "./admin/adminVolunteer";
+import adminPartnership from "./admin/adminPartnership";
 import adminDivision from "./admin/adminDivision";
 import adminMember from "./admin/adminMember";
 import adminMemberDetail from "./admin/adminPosition";
+import adminMerchandise from "./admin/adminMerchandise";
+import adminDonation from "./admin/adminDonation";
+import donationDetails from "./components/donationDetails";
+import adminArticle from "./admin/adminArticle";
+import articleDetails from "./components/articleDetails";
+import adminProject from "./admin/adminProject";
+import projectDetails from "./components/projectDetails";
 
 const routes = [
   {
@@ -129,6 +137,7 @@ const routes = [
       name: "AdminMember",
       component: adminMember
     },
+
     {
       path:"/adminmember/:id", 
       component: adminMemberDetail,
@@ -139,7 +148,53 @@ const routes = [
     {
       path:"/adminpartnership",
       name: "AdminPartnership",
-      component: adminPartnership
+      component: adminPartnership,
+    },
+    {
+      path:"/adminmerchandise",
+      name: "AdminMerchandise",
+      component: adminMerchandise
+    },
+
+    {
+      path:"/admindonation",
+      name: "AdminDonation",
+      component: adminDonation
+    },
+
+    {
+      path:"/admindonation/:id", 
+      component: donationDetails,
+      name: 'admindonation.show',
+      props: true
+    },
+
+
+    {
+      path:"/adminarticle",
+      name: "AdminArticle",
+      component: adminArticle
+    },
+
+    {
+      path:"/adminarticle/:id", 
+      component: articleDetails,
+      name: 'adminarticle.show',
+      props: true
+    },
+
+
+    {
+      path:"/adminproject",
+      name: "AdminProject",
+      component: adminProject
+    },
+
+    {
+      path:"/adminproject/:id", 
+      component: projectDetails,
+      name: 'adminproject.show',
+      props: true
     },
   ]
 
