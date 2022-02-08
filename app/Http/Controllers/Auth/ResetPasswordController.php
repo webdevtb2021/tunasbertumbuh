@@ -35,27 +35,35 @@ class ResetPasswordController extends Controller
 
     public function updatePassword(Request $request) {
         $data = $request->all();
-     
+        
+        // validasi request HTML
         Validator::make($data, [
             "email" => "required|email|exist:users",
             "password" => "required|string|min:6|confirmed",
             "password_confirmation" => "required",
         ]);
 
+        // ambil data token yang ada di tabel password_resets
         $updatePassword = DB::table('password_resets')
                               ->where(['email' => $request->email])
                               ->where(['token' => $request->token])
                               ->first();
 
+        // kalau nda ada, akan muncul error, invalid token yang berarti token tersebut paling ndak sudah terhapus dari proses penggantian password yang sebelumnya
         if(!$updatePassword) {
             return response(['error' => 'Invalid Token'], 404);
         }
-
+        
+        // kalau semua validasi sudah benar, tinggal diganti aja password yang ada pada table User
         $user = User::where(['email' => $request->email])
                     ->update(['password' => bcrypt($request->password)]);
-        error_log($request->password);
+        
+        //  jangan lupa untuk hapus semua token yang berkaitan dengan email yang bersangkutan
+        // biar kalau ngirim permintaan reset password lebih dari 1, nanti kehapus semua dan ndak bisa akses 
+        // halaman resetPassword.vue
         DB::table('password_resets')->where(['email' => $request->email])->delete();
-        error_log("============ HWERHEREASJKDJASJKDNASJKDJKLASDKA =============");
+        
+        // return responsenya
         return response(['status' => 'success', "message" => "Berhasil mengganti password"]);
     }
 }

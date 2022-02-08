@@ -36,6 +36,11 @@
                 :disabled="formDisabled"
                 required
             />
+            <div v-show="passwordBoolError" class="pl-1">
+                <p class="text-danger">
+                    {{ passwordError }}
+                </p>
+            </div>
 
             <label for="newPasswordConfirm" class="form-label">New Password Confirmation : </label>
             <input
@@ -49,8 +54,13 @@
                 :disabled="formDisabled"
                 required
             />
+            <div v-show="passwordBoolError" class="pl-1">
+                <p class="text-danger">
+                    {{ passwordConfirmationError }}
+                </p>
+            </div>
 
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="mt-2 btn btn-success">
                 Submit
             </button>
         </form>
@@ -83,6 +93,9 @@ export default {
                 token: null,
             },
             formDisabled: true,
+            passwordError : null,
+            passwordBoolError: false,
+            passwordConfirmationError : null,
 		}
 	},
 
@@ -120,13 +133,28 @@ export default {
 		changePassword(e) {
             e.preventDefault();
             this.formDisabled = true;
-            if(this.form.password != this.form.password_confirmation) {
+            this.passwordError = null;
+            this.passwordBoolError = null;
+            this.passwordConfirmationError = null;
+
+            if(this.form.password.trim().length < 7) {
+                // karena pengecekan dilakukan dengan menghilangkan spasi awal dan akhir terlebih dahulu
+                // kalau password yang dimasukkan tidak memiliki karakter, maka tidak boleh login
                 this.formDisabled = false;
-                swal.fire({
-                    title: 'Warning',
-                    text:   "Password doesn't match",
-                    icon: 'warning',
-                });
+                this.passwordBoolError = true;                
+                this.passwordError = "Please fill the password correctly";
+            }
+            else if(this.form.password != this.form.password_confirmation) {
+                // kalau password tidak sama dengan konfirmasi password
+                this.passwordConfirmationError = "Password doesn't match";
+                this.passwordBoolError = true;
+                this.formDisabled = false;
+            }
+            else if(/^[a-zA-Z0-9]*$/.test(password)) {
+                // password yang diperbolehkan hanya alfabet + numerik no spasi/karakter khusus
+                this.formDisabled = false;
+                this.passwordError = "Password should contain only alphabet and numeric characters";
+                this.passwordBoolError = true;                
             }
             else {
                 axios .put("/api/resetPassword",this.form)

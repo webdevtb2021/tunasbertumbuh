@@ -2,8 +2,11 @@
     <div class="container pt-5 mh-100 login-container">
         <h3 class="text-center mt-2 mb-2">Keluar</h3>
         <p class="text-center">Yakin anda ingin keluar ?</p>
-        <button class="btn btn-danger" @click="logout">Log out</button>
-        <button class="btn btn-warning" @click="home">Go back</button>
+
+        <div class="justify-content-center align-items-center d-flex">
+            <button class="m-2 btn btn-danger" @click="logout">Log out</button>
+            <button class="m-2 btn btn-warning" @click="home">Go back</button>
+        </div>
     </div>
 </template>
 

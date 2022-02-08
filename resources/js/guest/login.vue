@@ -45,7 +45,9 @@
 				<button @click="resetForm" class="btn btn-warning mt-1 ml-3" :disabled="disableButton">
                     Reset
                 </button>
-				<router-link :to="{ name: 'Forgot Password' }" class="btn btn-white mt-1 ml-3">Forget Password</router-link>
+				<span v-show="loginFailed >= 3">
+					<router-link :to="{ name: 'Forgot Password' }" class="btn btn-white mt-1 ml-3">Forgot your password ?</router-link>
+				</span>
         </div>
     </div>
 </template>
@@ -88,6 +90,7 @@ export default {
 			passwordRules: [
 				(v) => !!v || 'Password tidak boleh kosong',
 			],
+			loginFailed: 0,
 		}
 	},
 
@@ -167,7 +170,10 @@ export default {
 						text:   e.response.data.message,
 						icon: 'warning',
 					});
-	
+
+					// tombol lupa password akan dinyalakan ketika percobaan login sudah >= 3x
+					this.loginFailed++;
+
 					// enable all inputs
 					this.disableForm = false;
 					this.disableButton = false;

@@ -9,7 +9,7 @@
             </div>
         </span>
 
-        <div class="form-group row">
+        <div class="form-group">
             <label for="email">Enter your previous email address</label>
             <input type="text" id="email" v-model="email" class="form-control" :disabled="disableForm">
         </div>
@@ -68,6 +68,9 @@ export default {
 					email : this.email
 				})
 				.then((res) =>{
+					
+					// disini mencoba mengirimkan email menggunakan Laravel Mailer
+
 					console.log(res.data);
 					
 					var status = res.data.status; 
@@ -97,7 +100,8 @@ export default {
 				.catch(e => {
 					console.log(e.response);
 					this.disableForm = false;
-
+					
+					// kalau gagal, dinyatakan lewat swal dari errors() yang diberikan dari Laravel
 					swal.fire({
 						title: 'Oops !',
 						text:   e.response.data.message,
