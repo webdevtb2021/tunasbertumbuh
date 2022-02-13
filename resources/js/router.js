@@ -26,6 +26,11 @@ import adminArticle from "./admin/adminArticle";
 import articleDetails from "./components/articleDetails";
 import adminProject from "./admin/adminProject";
 import projectDetails from "./components/projectDetails";
+import AdminSesipb from "./admin/adminSesipb";
+import PekanBeasiswa from "./guest/pekanbeasiswa";
+import AbsensiPekanBeasiswa from "./guest/absensipekanbeasiswa";
+import adminPesertapb from "./admin/adminPesertapb";
+import pesertapbDetails from "./components/pesertapbDetails";
 
 const routes = [
   {
@@ -194,6 +199,37 @@ const routes = [
       path:"/adminproject/:id", 
       component: projectDetails,
       name: 'adminproject.show',
+      props: true
+    },
+
+    {
+      path:"/adminsesipb",
+      name: "AdminSesipb",
+      component: AdminSesipb
+    },
+
+    {
+      path:"/pekanbeasiswa",
+      name: "pekanbeasiswa",
+      component: PekanBeasiswa
+    },
+
+    {
+      path:"/absensipekanbeasiswa",
+      name: "absensipekanbeasiswa",
+      component: AbsensiPekanBeasiswa
+    },
+
+    {
+      path:"/adminpesertapb",
+      name: "AdminPesertapb",
+      component: adminPesertapb
+    },
+
+    {
+      path:"/adminpesertapb/:id", 
+      component: pesertapbDetails,
+      name: 'adminpesertapb.show',
       props: true
     },
   ]

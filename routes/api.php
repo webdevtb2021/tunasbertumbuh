@@ -14,6 +14,8 @@ use App\Http\Controllers\API\PositionController;
 use App\Http\Controllers\API\FundreportController;
 use App\Http\Controllers\API\VolunteerController;
 use App\Http\Controllers\API\DonationController;
+use App\Http\Controllers\API\SesipbController;
+use App\Http\Controllers\API\PesertapbController;
 
 
 /*
@@ -55,3 +57,9 @@ Route::apiResource('/adminmerchandise', MerchandiseController::class);
 Route::apiResource('/admindonation', DonationController::class); 
 Route::apiResource('/adminarticle', ArticleController::class); 
 Route::apiResource('/adminproject', ProjectController::class); 
+Route::apiResource('/adminsesipb',SesipbController::class);
+Route::apiResource('/adminpesertapb',PesertapbController::class);
+Route::get('/adminpesertapbs/{id}',[PesertapbController::class, 'indexFilter']);
+Route::get('/pekanbeasiswa',[SesipbController::class, 'index']);
+Route::post('/pekanbeasiswa',[PesertapbController::class, 'store']);
+Route::put('/absensipekanbeasiswa',[PesertapbController::class, 'update']);
