@@ -6,15 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Merchandise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class MerchandiseController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $merchandises = Merchandise::all();
+        return response()->json($merchandises);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexMerchandise()
     {
         // $merchandises = Merchandise::all();
 
@@ -47,15 +61,18 @@ class MerchandiseController extends Controller
         $this->validate($request,[
             'title' => 'required|string',
             'description' => 'required|string',
-            'price' => 'required|string',
+            'price' => 'required|numeric',
         ]);
-
-        $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/merchandises/'.$filename,$img);
-
+        if($request->image!='null'){
+            $image = $request->image;
+            $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/merchandises/'.$filename,$img);
+        }
+        else{
+            $filename=null;
+        }
         return Merchandise::create([            
             'title' => $request->title,
             'description' => $request->description,
@@ -99,17 +116,32 @@ class MerchandiseController extends Controller
         $this->validate($request,[
             'title' => 'required|string',
             'description' => 'required|string',
-            'price' => 'required|string',
+            'price' => 'required|numeric',
         ]);
 
-        $path = public_path()."/images/merchandises/".$merchandise->image;
-        unlink($path);
 
-        $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/merchandises/'.$filename,$img);
+        if($request->image!='null'){
+            if($merchandise->image){
+                $path = "'\storage\public\images\merchandises\'".$merchandise->image;
+                try{
+                    unlink($path);
+                }
+                catch (\Exception $e) {
+                    //$e->getMessage();
+                }            
+            }                
+            $image = $request->image;
+            $filename = Str::slug($request->title).'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/merchandises/'.$filename,$img);
+        }
+        else{
+            if($merchandise->image)
+                $filename=$merchandise->image;
+            else
+                $filename=null;
+        }
 
         $merchandise->update([
             'title' => $request->title,

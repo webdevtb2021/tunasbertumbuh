@@ -15,14 +15,30 @@ import GuestOpenRecruitment from "./guest/openrecruitments";
 import GuestVolunteer from "./guest/volunteers";
 import AdminFinance from "./admin/adminFinance";
 import adminVolunteer from "./admin/adminVolunteer";
+import adminPartnership from "./admin/adminPartnership";
 import adminDivision from "./admin/adminDivision";
-// import adminMember from "./admin/adminMember";
-// import adminMemberDetail from "./admin/adminPosition";
 import Login from "./guest/login";
 import Logout from "./guest/logout";
 import Register from "./guest/register";
 import SendResetPassword from "./guest/sendResetPassword";
 import ResetPassword from "./guest/resetPassword";
+import adminMember from "./admin/adminMember";
+import adminMemberDetail from "./admin/adminPosition";
+import adminMerchandise from "./admin/adminMerchandise";
+import adminDonation from "./admin/adminDonation";
+import donationDetails from "./components/donationDetails";
+import adminArticle from "./admin/adminArticle";
+import articleDetails from "./components/articleDetails";
+import adminProject from "./admin/adminProject";
+import projectDetails from "./components/projectDetails";
+import AdminSesipb from "./admin/adminSesipb";
+import PekanBeasiswa from "./guest/pekanbeasiswa";
+import AbsensiPekanBeasiswa from "./guest/absensipekanbeasiswa";
+import adminPesertapb from "./admin/adminPesertapb";
+import pesertapbDetails from "./components/pesertapbDetails";
+
+
+
 
 // 0: Have no access admin
 // 1: all access
@@ -202,6 +218,117 @@ const routes = [
 		component: ResetPassword,
 		meta: { authorize : [] }
 	},
+
+    {
+      path:"/adminmember",
+      name: "AdminMember",
+      component: adminMember,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminmember/:id", 
+      component: adminMemberDetail,
+      name: 'adminmember.show',
+      props: true,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminpartnership",
+      name: "AdminPartnership",
+      component: adminPartnership,
+	  meta: { authorize : [] }
+    },
+    {
+      path:"/adminmerchandise",
+      name: "AdminMerchandise",
+      component: adminMerchandise,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/admindonation",
+      name: "AdminDonation",
+      component: adminDonation,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/admindonation/:id", 
+      component: donationDetails,
+      name: 'admindonation.show',
+      props: true,
+	  meta: { authorize : [] }
+    },
+
+
+    {
+      path:"/adminarticle",
+      name: "AdminArticle",
+      component: adminArticle,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminarticle/:id", 
+      component: articleDetails,
+      name: 'adminarticle.show',
+      props: true,
+	  meta: { authorize : [] }
+    },
+
+
+    {
+      path:"/adminproject",
+      name: "AdminProject",
+      component: adminProject,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminproject/:id", 
+      component: projectDetails,
+      name: 'adminproject.show',
+      props: true,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminsesipb",
+      name: "AdminSesipb",
+      component: AdminSesipb,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/pekanbeasiswa",
+      name: "pekanbeasiswa",
+      component: PekanBeasiswa,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/absensipekanbeasiswa",
+      name: "absensipekanbeasiswa",
+      component: AbsensiPekanBeasiswa,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminpesertapb",
+      name: "AdminPesertapb",
+      component: adminPesertapb,
+	  meta: { authorize : [] }
+    },
+
+    {
+      path:"/adminpesertapb/:id", 
+      component: pesertapbDetails,
+      name: 'adminpesertapb.show',
+      props: true,
+	  meta: { authorize : [] }
+    },
   ]
 
 const router = createRouter({

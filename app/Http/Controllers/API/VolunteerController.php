@@ -127,7 +127,7 @@ class VolunteerController extends Controller
         }
         else{
             $image = $request->image;
-            $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
+            $filename = Str::slug($request->name).'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
             $img = Image::make($image->getRealPath());
             $img->stream();
             Storage::disk('public')->put('/images/volunteers/'.$filename,$img);

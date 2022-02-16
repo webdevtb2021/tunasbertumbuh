@@ -17,6 +17,8 @@ use App\Http\Controllers\API\DonationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\API\SesipbController;
+use App\Http\Controllers\API\PesertapbController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,20 +43,6 @@ Route::post('/register', [LoginController::class, 'register']);
 
 
 Route::get('/homepage', [App\Http\Controllers\API\HomepageController::class, 'index']);
-Route::apiResource('partnerships', PartnershipController::class);
-Route::get('/volunteers', [VolunteerController::class, 'indexVolunteer']);
-Route::apiResource('projects', ProjectController::class);
-Route::get('/testimonies', [UserController::class, 'indexTestimonies']);
-Route::get('/members', [UserController::class, 'indexMembers']);
-Route::get('/members/{period}', [UserController::class, 'indexMembers']);
-Route::get('/finance', [FundreportController::class, 'indexFinance']);
-Route::apiResource('articles', ArticleController::class);
-Route::apiResource('merchandises', MerchandiseController::class);
-Route::get('/donationGuest', [DonationController::class, 'indexDonations']);
-Route::apiResource('/donations', DonationController::class);
-Route::apiResource('/adminfinance', FundreportController::class);
-Route::apiResource('/adminvolunteer', VolunteerController::class);
-Route::apiResource('/admindivision', DivisionController::class);
 
 // Route::get('/forget-password', [ForgotPasswordController::class, 'getEmail']);
 Route::post('/forget-password', [ForgotPasswordController::class, 'postEmail']);
@@ -62,3 +50,33 @@ Route::post('/getEmail', [ForgotPasswordController::class, 'getEmailFromToken'])
 
 Route::put('/resetPassword',[ResetPasswordController::class, 'updatePassword']);
 // Route::get('/reset-password/{token}',[ResetPasswordController::class, 'getPassword']);
+
+Route::apiResource('partnerships', PartnershipController::class); 
+Route::get('/volunteers', [VolunteerController::class, 'indexVolunteer']); 
+Route::get('/projects', [ProjectController::class,'indexProjects']); 
+Route::get('/projects/{id}', [ProjectController::class,'show']); 
+Route::get('/testimonies', [UserController::class,'indexTestimonies']); 
+Route::get('/members', [UserController::class,'indexMembers']); 
+Route::get('/members/{period}', [UserController::class,'indexMembers']); 
+Route::get('/finance', [FundreportController::class,'indexFinance']); 
+Route::get('/articles', [ArticleController::class,'indexArticles']); 
+Route::get('/articles/{id}', [ArticleController::class,'show']); 
+Route::get('merchandises', [MerchandiseController::class,'indexMerchandise']); 
+Route::get('/donationGuest', [DonationController::class,'indexDonations']); 
+Route::apiResource('/donations', DonationController::class); 
+Route::apiResource('/adminfinance',FundreportController::class);
+Route::apiResource('/adminvolunteer',VolunteerController::class);
+Route::apiResource('/admindivision',DivisionController::class);
+Route::apiResource('/adminmember',UserController::class);
+Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 
+Route::apiResource('/adminpartnership',PartnershipController::class);
+Route::apiResource('/adminmerchandise', MerchandiseController::class); 
+Route::apiResource('/admindonation', DonationController::class); 
+Route::apiResource('/adminarticle', ArticleController::class); 
+Route::apiResource('/adminproject', ProjectController::class); 
+Route::apiResource('/adminsesipb',SesipbController::class);
+Route::apiResource('/adminpesertapb',PesertapbController::class);
+Route::get('/adminpesertapbs/{id}',[PesertapbController::class, 'indexFilter']);
+Route::get('/pekanbeasiswa',[SesipbController::class, 'index']);
+Route::post('/pekanbeasiswa',[PesertapbController::class, 'store']);
+Route::put('/absensipekanbeasiswa',[PesertapbController::class, 'update']);

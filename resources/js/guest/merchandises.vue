@@ -8,7 +8,7 @@
                 <div class="row d-flex justify-content-around">
                     <div v-for="(d,index) in data.free" :key="index" class="col-lg-3">
                         <button class="card mr-auto ml-auto w-75 h-90 btn btn-default" data-toggle="modal" :data-target="'#modal-lg-f'+index" v-if="d.id">
-                            <img class="card-img-top" :src="d.image" alt="Card image cap" />
+                            <img class="card-img-top" :src="'storage/images/merchandises/'+d.image" alt="Card image cap" />
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ d.title}}</b></h5>
                             </div>
@@ -38,7 +38,7 @@
                                                         <div class="col-12 col-sm-6">
                                                             <div class="col-12">
                                                             <img
-                                                                :src="d.image" 
+                                                                :src="'storage/images/merchandises/'+d.image" 
                                                                 class="product-image"
                                                                 alt="Product Image"
                                                             />
@@ -84,7 +84,7 @@
                 <div class="row d-flex justify-content-around">
                     <div v-for="(d,index) in data.premium" :key="index" class="col-lg-3">
                         <button class="card mr-auto ml-auto w-75 h-90 btn btn-default" data-toggle="modal" :data-target="'#modal-lg-p'+index" v-if="d.id">
-                            <img class="card-img-top" :src="d.image" alt="Card image cap" />
+                            <img class="card-img-top" :src="'storage/images/merchandises/'+d.image" alt="Card image cap" />
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{ d.title}}</b></h5>
                             </div>
@@ -113,7 +113,7 @@
                                                         <div class="col-12 col-sm-6">
                                                             <div class="col-12">
                                                             <img
-                                                                :src="d.image" 
+                                                                :src="'storage/images/merchandises/'+d.image" 
                                                                 class="product-image"
                                                                 alt="Product Image"
                                                             />
