@@ -12,15 +12,19 @@
                     <option v-for="gen in data.period" :value="gen.id" :key="gen.id">{{ gen.name }} </option>
                 </select>
             </div>
-            <div id="org" v-if="data.member">
-                <OrgChart :nodess="nodess" :key="nodess"/>
+            <br>
+            <div id="org" v-if="data.member" 
+                style="height: 1200px; background-color: #fffeff">
+                <Chart :data="nodess"></Chart>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import OrgChart from '../components/OrgChart.vue'
+
+
+import Chart from '../components/Chart';
 import guest from '../mixins/guest';
 
 export default {
@@ -29,7 +33,7 @@ export default {
         selected: "selected",
     },
     components: {
-        OrgChart,
+        Chart,
     },
     computed:{
         endpoint () {
@@ -45,17 +49,21 @@ export default {
         fetchNodess() {
             let nodesData = [];
             for(let i = 0; i < this.data.member.length; i++){
+                let divisi = '';
+                if(! this.data.member[i].division === null)
+                    divisi = this.data.member[i].division.name;
                 nodesData.push({
                                 "id" : this.data.member[i].user_id,
-                                "pid" : this.data.member[i].leader,
-                                "Tunas Rangers Name" : this.data.member[i].user.name,
-                                "Position" : this.data.member[i].jabatan.name +" " + this.data.member[i].division.name,            
-                                "img" : this.data.member[i].user.dependences[0].url_image,
-                                "Facebook" : this.data.member[i].user.dependences[0].facebook,
-                                "Instagram" : this.data.member[i].user.dependences[0].instagram,
-                                "Twitter" : this.data.member[i].user.dependences[0].twitter
+                                "parentId" : this.data.member[i].leader,
+                                "name" : this.data.member[i].user.name,
+                                "positionName" : this.data.member[i].jabatan.name +" " + divisi,            
+                                "imageUrl" : '../storage/images/users/'+this.data.member[i].user.dependences[0].url_image,
+                                "fb" : this.data.member[i].user.dependences[0].facebook,
+                                "ig" : this.data.member[i].user.dependences[0].instagram,
+                                "tw" : this.data.member[i].user.dependences[0].twitter
                                 });
             }            
+
             return nodesData;
         },
 
@@ -66,26 +74,7 @@ export default {
                         this.nodess = this.fetchNodess();
                     });
         },
+
     },
 }
 </script>
-
-<style>
-    #org {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 20px;
-    }
-
-    #tree {
-        width: 100% ;
-        height: 75%;
-    }
-
-    .node rect {
-        fill: #289672;
-    }
-</style>

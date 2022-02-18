@@ -179,7 +179,6 @@ class UserController extends Controller
             'name' =>  $request->name,
             'email' =>  $request->email,
             'permission' => $request->permission,
-            'password' => $request->password,
             'status' => $request->status,
         ]);
         $user->save();

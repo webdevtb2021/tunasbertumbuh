@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function latestPositions()
     {
-        return $this->hasOne(Position::class)->with('division:id,name','periode:id,name','jabatan:id,name')->orderBy('id', 'DESC');
+        return $this->hasOne(Position::class)->with('division:id,name','periode:id,name','jabatan:id,name')->orderBy('periode_id', 'DESC');
     }
 
     public function managers()

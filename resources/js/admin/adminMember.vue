@@ -44,7 +44,7 @@
                                     <small class="badge badge-danger" v-else>Tidak Aktif</small>
                                 </td>
                                 
-                                <td v-if="d.latest_positions">{{ d.latest_positions.jabatan.name }} {{ d.latest_positions.division.name }} {{ d.latest_positions.periode.name }}</td>
+                                <td v-if="d.latest_positions">{{ d.latest_positions.jabatan.name }} {{ d.latest_positions.division != null ? d.latest_positions.division.name :''}} {{ d.latest_positions.periode.name }}</td>
                                 <td v-else></td>
                                 <td>
                                     <router-link :to="{ name: 'adminmember.show', params: { id: d.id } }"  class="btn btn-sm btn-link">
