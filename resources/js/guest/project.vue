@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <section id="content-project-info" v-if="data.id">
         <div class="container pt-5">
             <div class="row justify-content-center">
@@ -19,11 +21,16 @@
             </div>
         </div>
     </section>
+</div>
 </template>
 
 <script>
 import guest from '../mixins/guest';
+import Navbar from '../components/Navbar';
+
 export default {
+  components: {
+    Navbar,},
 	
 	mixins:[guest],
     props:['id'],

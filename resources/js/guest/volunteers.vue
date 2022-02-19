@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
 <section id="content-patner">
     <div class="container pt-5">
         <div class="row justify-content-center border bg-white pt-4">
@@ -11,17 +13,19 @@
         </div>
     </div>
 </section>
+</div>
 </template>
 
 <script>
 import guest from '../mixins/guest';
 import profile from '../components/profile.vue';
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,profile},
 	
 	mixins:[guest],
-
-    components:{profile},
 
     computed:{
         endpoint () {

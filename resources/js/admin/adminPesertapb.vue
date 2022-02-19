@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -73,6 +75,7 @@
             </div> 
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -94,10 +97,11 @@ import $ from 'jquery';
 import Multiselect from '@vueform/multiselect'
 
 window.JSZip = jsZip;
-
+import Navbar from '../components/Navbar';
 export default {
     components: {
-      Multiselect,
+    Navbar,
+    Multiselect,
     },
 
     data() {

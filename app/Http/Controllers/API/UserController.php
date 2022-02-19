@@ -80,6 +80,7 @@ class UserController extends Controller
             'email' =>  $request->email,
             'permission' => $request->permission,
             'status' => $request->status,
+            'password'=> Hash::make('admin@2021'),
         ]);
 
         $image = $request->url_image;

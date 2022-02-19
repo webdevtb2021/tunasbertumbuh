@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <section id="content-free-march">
         <div class="container bg-white pb-5 mt-5">
             <div class="row justify-content-center bg-white pt-4">
@@ -153,12 +155,16 @@
 
         
     </section>
+</div>
 </template>
 
 <script>
 import guest from '../mixins/guest';
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,},
 	
 	mixins:[guest],
 

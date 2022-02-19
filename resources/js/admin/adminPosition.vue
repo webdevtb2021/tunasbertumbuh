@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -25,13 +27,15 @@
                         </tr>
                         <tr>
                           <th>Hak Akses</th>
-                            <td v-if="data.member.permission==0">Tidak memiliki Hak Akses</td>
-                            <td v-else-if="data.member.permission==1">Admin AFD</td>
-                            <td v-else-if="data.member.permission==2">Admin CPD</td>
-                            <td v-else-if="data.member.permission==3">Admin HRD</td>
-                            <td v-else-if="data.member.permission==4">Admin MFD</td>
-                            <td v-else-if="data.member.permission==5">Admin MIT</td>
-                            <td v-else="data.member.permission==6">Admin PMD</td>
+                            <td v-if="data.member.permission==0">Tidak memiliki Hak Akses admin</td>
+                                <td v-else-if="data.member.permission==1">Founder / Executive Director</td>
+                                <td v-else-if="data.member.permission==2">Admin AFD</td>
+                                <td v-else-if="data.member.permission==3">Admin HRD</td>
+                                <td v-else-if="data.member.permission==4">Admin MFD</td>
+                                <td v-else-if="data.member.permission==5">Admin CPD</td>
+                                <td v-else-if="data.member.permission==6">Admin PMD</td>
+                                <td v-else-if="data.member.permission==7">Admin MIT</td>
+                                <td v-else>Web Development</td>
                         </tr>
                         <tr>
                           <th>No telepon / wa</th>
@@ -60,7 +64,7 @@
                         </tr>
                         <tr>
                         <th>Riwayat Jabatan </th>
-                            <td><button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" @click.prevent="showModal"><i class="fas fa-calendar-plus"></i> Tambahkan jabatan</button></td>
+                            <td><button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" @click.prevent="showModal" v-if="auth_permission==3"><i class="fas fa-calendar-plus"></i> Tambahkan jabatan</button></td>
                         </tr>
                       </tbody>
                     </table>
@@ -74,8 +78,8 @@
                                         <th scope="col">Jabatan</th>
                                         <th scope="col">Divisi</th>
                                         <th scope="col">Ketua</th>
-                                        <th >Edit</th>
-                                        <th >Delete</th>
+                                        <th v-if="auth_permission==3">Edit</th>
+                                        <th v-if="auth_permission==3">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,12 +88,12 @@
                                         <td>{{ d.jabatan.name }}</td>
                                         <td>{{ d.division.name }}</td>
                                         <td>{{ d.leader.name }}</td>                                
-                                        <td>
+                                        <td v-if="auth_permission==3">
                                             <button class="btn btn-sm btn-link" @click.prevent="editData(d)">
                                                 <i class="fas fa-edit text-warning"/>
                                             </button>
                                         </td>
-                                        <td>
+                                        <td v-if="auth_permission==3">
                                             <button class="btn btn-sm btn-link" @click.prevent="deleteData(d.id)">
                                                 <i class="fas fa-trash  text-danger"/>
                                             </button>
@@ -152,7 +156,7 @@
             </div> 
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -160,10 +164,12 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-
+import Navbar from '../components/Navbar';
 export default {
+    components: {
+    Navbar,
+     },
     props:['id'],
-
     data() {
       return {
         data:{},
@@ -184,6 +190,12 @@ export default {
         },
         positionroute() {
             return `/api/adminmember/${this.id}/adminposition`;
+        },
+        auth_id(){
+            return localStorage.getItem('user_id');
+        },
+        auth_permission(){
+            return localStorage.getItem("user_permission");
         },
     },
 

@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container pt-5 mh-100 login-container">
         <h3 class="text-center mt-2 mb-2">Keluar</h3>
         <p class="text-center">Yakin anda ingin keluar ?</p>
@@ -8,10 +10,15 @@
             <button class="m-2 btn btn-warning" @click="home">Go back</button>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-    export default {
+import Navbar from '../components/Navbar';
+
+export default {
+  components: {
+    Navbar,},
         data() {
             return {
                 disableForm: false,

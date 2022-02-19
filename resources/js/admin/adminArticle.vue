@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -56,6 +58,7 @@
             </div> 
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -63,8 +66,11 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-
+import Navbar from '../components/Navbar';
 export default {
+    components: {
+    Navbar,
+     },
 
     data() {
       return {

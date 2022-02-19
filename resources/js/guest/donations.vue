@@ -1,5 +1,6 @@
 <template>
-    <div>
+<div>
+  <Navbar/>
     	<section>
   			<div class="container-fluid">
   			  <div class="row">
@@ -215,13 +216,17 @@
           </div>
       </section>
       <!-- /.Content -->
-    </div>
+</div>
 </template>
 
 <script>
 import guest from '../mixins/guest';
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,},
+
     mixins:[guest],
 
     data(){

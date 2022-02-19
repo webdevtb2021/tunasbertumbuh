@@ -1,5 +1,6 @@
 <template>
-
+<div>
+  <Navbar/>
 <!-- Content -->
 <section id="content-artikel">
     <div class="container pt-5">
@@ -26,13 +27,17 @@
         </div>
     </div>
 </section>
-<!-- /.Content -->
 
+<!-- /.Content -->
+</div>
 </template>
 
 <script>
 import guest from '../mixins/guest';
+import Navbar from '../components/Navbar';
 export default {
+  components: {
+    Navbar,},
 	
 	mixins:[guest],
     data() {

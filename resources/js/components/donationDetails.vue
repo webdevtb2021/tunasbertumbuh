@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -37,7 +39,7 @@
                         <tr>
                           <th>Bukti Transfer / Bukti Pengiriman</th>
                           <td>
-                          	<img :src="'../storage/images/donations/'+donations.bukti" :alt="bukti" /> 
+                              <vue-picture-swipe :items="image"></vue-picture-swipe> 
                           </td>
                         </tr>
                         <tr>
@@ -76,7 +78,7 @@
             </div>
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -84,8 +86,12 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-
+import { ref } from 'vue';
+import Navbar from '../components/Navbar';
 export default {
+    components: {
+    Navbar,
+     },
     props:['id'],
 
     data() {
@@ -96,6 +102,7 @@ export default {
           verification:'',
         }),
         isNotChange:true,
+        image:ref([]),
       }
     },
 
@@ -109,6 +116,17 @@ export default {
         axios.get(this.endpoint)
         .then((response)=>{
             this.donations = response.data;
+                this.image=ref([]);
+                this.$nextTick(function() {
+                    this.image.push(
+                        {
+                          src: '../storage/images/donations/'+this.donations.bukti,
+                          thumbnail: '../storage/images/donations/'+this.donations.bukti,
+                          w: 1200,
+                          h: 900
+                        }
+                    );
+                });
         })
     },
 
@@ -117,6 +135,17 @@ export default {
             axios.get(this.endpoint)
 	        .then((response)=>{
 	            this.donations = response.data;
+                this.image=ref([]);
+                this.$nextTick(function() {
+                    this.image.push(
+                        {
+                          src: '../storage/images/donations/'+this.donations.bukti,
+                          thumbnail: '../storage/images/donations/'+this.donations.bukti,
+                          w: 1200,
+                          h: 900
+                        }
+                    );
+                });
 	        })
         },
 

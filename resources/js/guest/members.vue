@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <section id="content-team">
         <div class="container pt-5">
             <div class="row justify-content-center">
@@ -19,6 +21,7 @@
             </div>
         </div>
     </section>
+</div>
 </template>
 
 <script>
@@ -26,14 +29,14 @@
 
 import Chart from '../components/Chart';
 import guest from '../mixins/guest';
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,Chart},
     mixins:[guest],
     data: {
         selected: "selected",
-    },
-    components: {
-        Chart,
     },
     computed:{
         endpoint () {

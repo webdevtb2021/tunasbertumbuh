@@ -1,5 +1,6 @@
 <template>
 <div>
+  <Navbar/>
   <section id="carousel">
     <Carousel :autoplay="3000" :wrap-around="true">
       <Slide v-for="(carouselData, index) in data.carousels" :key="index"> 
@@ -189,9 +190,12 @@
 import guest from '../mixins/guest';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+import Navbar from '../components/Navbar';
+
 export default {
 	mixins:[guest],
   components: {
+    Navbar,
     Carousel,
     Slide,
     Pagination,

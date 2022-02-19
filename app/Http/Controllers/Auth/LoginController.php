@@ -120,8 +120,8 @@ class LoginController extends Controller
 
         $registerData["name"] = $registerData["firstName"] . ' ' . $registerData["lastName"];
         $registerData["password"] = bcrypt($registerData["password"]);
-        $registerData["status"] = 1; // status default aktif
-        $registerData["permission"] = 1; // default jadi admin
+        $registerData["status"] = 0; // status default tidak aktif
+        $registerData["permission"] = 0; // default tidak memiliki akses sebagai admin
 
         $user = User::create($registerData);
         return response([

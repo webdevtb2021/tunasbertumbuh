@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container pt-5 mh-100 login-container">
         <h3 class="text-start mt-2 mb-2">Reset Password</h3>
         
@@ -25,6 +27,7 @@
 
 
     </div>
+</div>
 </template>
 
 <!-- in file styling -->
@@ -41,8 +44,11 @@
 </style>
 
 <script>
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,},
 
 	data() {
 		return {

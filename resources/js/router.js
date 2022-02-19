@@ -11,7 +11,6 @@ import GuestMembers from "./guest/members";
 import GuestMerchandises from "./guest/merchandises";
 import GuestTestimonies from "./guest/testimonies";
 import GuestFinance from "./guest/finance";
-import GuestOpenRecruitment from "./guest/openrecruitments";
 import GuestVolunteer from "./guest/volunteers";
 import AdminFinance from "./admin/adminFinance";
 import adminVolunteer from "./admin/adminVolunteer";
@@ -36,28 +35,19 @@ import PekanBeasiswa from "./guest/pekanbeasiswa";
 import AbsensiPekanBeasiswa from "./guest/absensipekanbeasiswa";
 import adminPesertapb from "./admin/adminPesertapb";
 import pesertapbDetails from "./components/pesertapbDetails";
+import NotFound from "./components/NotFound";
 
-
-
-
+// META PERMISSION ACCESS
 // 0: Have no access admin
-// 1: all access
-// 2: Web Admin / Web Dev
-// 3: HR / Human Relation
-// 4: MFD / Marketing and Fundraising
-// 5: CPD / Comm and Partner
-// 6: PMD / Project Management
+// 1: all access -> Founder, Executive Director
+// 2: Administration and Finance Dept
+// 3: Human Resource Dept
+// 4: Marketing and Fundraising Dept
+// 5: Community and Partnership Dept
+// 6: Project Management Dept
+// 7: MIT
+// 8: Web Development
 
-// menurut dokumen
-// 1 => guest
-// 2 => HR admin, division, dkk
-// 3 => MFD admin
-// 4 => CPD admin, volunteer
-// 5 => PMD admin
-// 6 => AFD admin, finance
-// 7 => WEB admin
-
-// finance sementara diarahin ke Marketing and Fundraising
 
 const routes = [
   	{
@@ -82,7 +72,7 @@ const routes = [
 		path: "/logout",
 		name: "logout",
 		component : Logout,
-		meta: { authorize: [1, 2, 3, 4, 5, 6] }
+		meta: { authorize: [0,1, 2, 3, 4, 5, 6,7,8] }
 	},
 	{
 	  path:"/donations",
@@ -166,13 +156,6 @@ const routes = [
 	},
 
 	{
-	  path:"/openrecruitments",
-	  name: "openrecruitments",
-	  component: GuestOpenRecruitment,
-	  meta: { authorize : [] }
-	},
-
-	{
 		path:"/volunteers",
 		name: "volunteers",
 		component: GuestVolunteer,
@@ -184,7 +167,7 @@ const routes = [
 		path:"/adminfinance",
 		name: "AdminFinance",
 		component: AdminFinance,
-		meta: { authorize : [4] }
+		meta: { authorize : [1,8,2] }
 	},
 
 	{
@@ -192,7 +175,7 @@ const routes = [
 		path:"/adminvolunteer",
 		name: "AdminVolunteer",
 		component: adminVolunteer,
-		meta: { authorize : [4] }
+		meta: { authorize : [1,8,5] }
 	},
 
 	{
@@ -200,7 +183,7 @@ const routes = [
 		path:"/admindivision",
 		name: "AdminDivision",
 		component: adminDivision,
-		meta: { authorize : [3] }
+		meta: { authorize : [1,8,3] }
 	},
 
 	{
@@ -223,7 +206,7 @@ const routes = [
       path:"/adminmember",
       name: "AdminMember",
       component: adminMember,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,3,2] }
     },
 
     {
@@ -231,27 +214,27 @@ const routes = [
       component: adminMemberDetail,
       name: 'adminmember.show',
       props: true,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,3,2] }
     },
 
     {
       path:"/adminpartnership",
       name: "AdminPartnership",
       component: adminPartnership,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,5] }
     },
     {
       path:"/adminmerchandise",
       name: "AdminMerchandise",
       component: adminMerchandise,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,4] }
     },
 
     {
       path:"/admindonation",
       name: "AdminDonation",
       component: adminDonation,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,4] }
     },
 
     {
@@ -259,7 +242,7 @@ const routes = [
       component: donationDetails,
       name: 'admindonation.show',
       props: true,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,4] }
     },
 
 
@@ -267,7 +250,7 @@ const routes = [
       path:"/adminarticle",
       name: "AdminArticle",
       component: adminArticle,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,5] }
     },
 
     {
@@ -275,7 +258,7 @@ const routes = [
       component: articleDetails,
       name: 'adminarticle.show',
       props: true,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,5] }
     },
 
 
@@ -283,7 +266,7 @@ const routes = [
       path:"/adminproject",
       name: "AdminProject",
       component: adminProject,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,6] }
     },
 
     {
@@ -291,14 +274,14 @@ const routes = [
       component: projectDetails,
       name: 'adminproject.show',
       props: true,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,6] }
     },
 
     {
       path:"/adminsesipb",
       name: "AdminSesipb",
       component: AdminSesipb,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,6] }
     },
 
     {
@@ -319,7 +302,7 @@ const routes = [
       path:"/adminpesertapb",
       name: "AdminPesertapb",
       component: adminPesertapb,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,6,2] }
     },
 
     {
@@ -327,7 +310,11 @@ const routes = [
       component: pesertapbDetails,
       name: 'adminpesertapb.show',
       props: true,
-	  meta: { authorize : [] }
+	  meta: { authorize : [1,8,6,2] }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: "/"
     },
   ]
 
@@ -344,7 +331,8 @@ router.beforeEach((to, from, next) => {
 	console.log(authorize);
 	console.log(authorize.includes(localStorage.getItem("user_permission")));
 	console.log(localStorage.getItem("user_permission"))
-	console.log(typeof(localStorage.getItem("user_permission")))
+	console.log(localStorage.getItem("user_id"))
+	console.log(typeof(localStorage.getItem("user_id")))
 	console.log("======================================")
 
 	// kalau akses halaman login tapi udah login duluan

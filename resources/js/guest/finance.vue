@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <!-- Content -->
     <section id="finance-report">
         <div class="container pt-5">
@@ -45,6 +47,7 @@
         </div>
     </section>
     <!-- ./Content -->
+</div>
 </template>
 
 <script>
@@ -52,8 +55,11 @@ import guest from "../mixins/guest";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
+import Navbar from '../components/Navbar';
 
 export default {
+  components: {
+    Navbar,},
     mixins: [guest],
 
     computed: {

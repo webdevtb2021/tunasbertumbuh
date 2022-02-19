@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -77,7 +79,7 @@
             </div>
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -86,8 +88,11 @@ import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
 import { ref } from 'vue';
-
+import Navbar from '../components/Navbar';
 export default {
+    components: {
+    Navbar,
+     },
     props:['id'],
 
     data() {
@@ -108,6 +113,9 @@ export default {
             return `/api/adminarticle/${this.id}`;
         },
 
+        auth_id(){
+            return localStorage.getItem('user_id');
+        },
 
     },
 
@@ -162,7 +170,7 @@ export default {
 
             const formData = new FormData()
             formData.append('title', this.articles.title)
-            formData.append('user_id', 31)
+            formData.append('user_id', this.auth_id)
             formData.append('body', this.articles.body)
             
             for (var x = 0; x < this.imageUpload.length; x++) {

@@ -1,6 +1,9 @@
 <template>
+<div>
+
+  <Navbar/>
     <div class="container pt-5 mh-100 login-container">
-        <h3 class="text-start mt-2 mb-2">Tunas Bertumbuh</h3>
+        <h3 class="text-start mt-2 mb-2">Masukkan email dan password untuk login sebagai admin</h3>
         <div class="col-md-12 p-0 no-gutters">
             
                 <div class="mb-3">
@@ -45,11 +48,12 @@
 				<button @click="resetForm" class="btn btn-warning mt-1 ml-3" :disabled="disableButton">
                     Reset
                 </button>
-				<span v-show="loginFailed >= 3">
+				<span>
 					<router-link :to="{ name: 'Forgot Password' }" class="btn btn-white mt-1 ml-3">Forgot your password ?</router-link>
 				</span>
         </div>
     </div>
+   </div>
 </template>
 
 <!-- in file styling -->
@@ -67,7 +71,11 @@
 
 <script>
 
+import Navbar from '../components/Navbar';
+
 export default {
+  components: {
+    Navbar,},
 
 	data() {
 		return {

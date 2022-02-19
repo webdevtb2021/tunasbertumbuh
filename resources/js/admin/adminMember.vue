@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container mt-2">
         <div>
             <div class="card">
@@ -22,8 +24,8 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Last Position</th>
                                 <th >Detail</th>
-                                <th >Edit</th>
-                                <th >Delete</th>
+                                <th v-if="auth_permission==3">Edit</th>
+                                <th v-if="auth_permission==3">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,13 +34,15 @@
                                 <td>{{ d.email }}</td>
                                 <td v-if="d.latest_dependences">{{ d.latest_dependences.phone }}</td>
                                 <td v-else></td>
-                                <td v-if="d.permission==0">Tidak memiliki Hak Akses</td>
-                                <td v-else-if="d.permission==1">Admin AFD</td>
-                                <td v-else-if="d.permission==2">Admin CPD</td>
+                                <td v-if="d.permission==0">Tidak memiliki Hak Akses admin</td>
+                                <td v-else-if="d.permission==1">Founder / Executive Director</td>
+                                <td v-else-if="d.permission==2">Admin AFD</td>
                                 <td v-else-if="d.permission==3">Admin HRD</td>
                                 <td v-else-if="d.permission==4">Admin MFD</td>
-                                <td v-else-if="d.permission==5">Admin MIT</td>
-                                <td v-else="d.permission==6">Admin PMD</td>
+                                <td v-else-if="d.permission==5">Admin CPD</td>
+                                <td v-else-if="d.permission==6">Admin PMD</td>
+                                <td v-else-if="d.permission==7">Admin MIT</td>
+                                <td v-else>Web Development</td>
                                 <td>
                                     <small class="badge badge-success" v-if="d.status==1">Aktif</small>
                                     <small class="badge badge-danger" v-else>Tidak Aktif</small>
@@ -51,12 +55,12 @@
                                         <i class="fas fa-info-circle text-success"/> 
                                     </router-link>
                                 </td>
-                                <td>
+                                <td v-if="auth_permission==3">
                                     <button class="btn btn-sm btn-link" @click.prevent="editData(d)">
                                         <i class="fas fa-edit text-warning"/>
                                     </button>
                                 </td>
-                                <td>
+                                <td v-if="auth_permission==3">
                                     <button class="btn btn-sm btn-link" @click.prevent="deleteData(d.id)">
                                         <i class="fas fa-trash  text-danger"/>
                                     </button>
@@ -121,13 +125,15 @@
                         <div class="form-group">
                             <label>Hak Akses</label>
                             <select class="form-control" v-model="form.permission">
-                                <option value="0">Tidak Memiliki Hak Akses</option>
-                                <option value="1">Admin AFD</option>
-                                <option value="2">Admin CPD</option>
-                                <option value="3">Admin HR</option>
+                                <option value="0">Tidak memiliki Hak Akses admin</option>
+                                <option value="1">Founder / Executive Director</option>
+                                <option value="2">Admin AFD</option>
+                                <option value="3">Admin HRD</option>
                                 <option value="4">Admin MFD</option>
-                                <option value="5">Admin MIT</option>
+                                <option value="5">Admin CPD</option>
                                 <option value="6">Admin PMD</option>
+                                <option value="7">Admin MIT</option>
+                                <option value="8">Web Development</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -169,7 +175,7 @@
             </div> 
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -177,8 +183,11 @@
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from 'jquery'; 
-
+import Navbar from '../components/Navbar';
 export default {
+    components: {
+    Navbar,
+     },
 
     data() {
       return {
@@ -208,6 +217,12 @@ export default {
     computed: {
         endpoint() {
             return `/api/adminmember`;
+        },
+        auth_id(){
+            return localStorage.getItem('user_id');
+        },
+        auth_permission(){
+            return localStorage.getItem("user_permission");
         },
     },
 

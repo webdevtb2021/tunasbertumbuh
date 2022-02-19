@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar/>
     <div class="container pt-5 mh-100 login-container">
         <h3 class="text-start mt-2 mb-2">Bergabung dengan Tunas Bertumbuh !</h3>
         <div class="col-md-12 p-0 no-gutters">
@@ -86,10 +88,15 @@
             </button>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-    export default {
+import Navbar from '../components/Navbar';
+
+export default {
+  components: {
+    Navbar,},
         data() {
             return {
                 form: {

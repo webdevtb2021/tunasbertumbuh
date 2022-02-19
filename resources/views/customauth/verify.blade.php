@@ -14,7 +14,7 @@
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
-                    <a class="btn btn-outline-success" href="http://127.0.0.1:8000/reset-password/{{$token}}">Klik disini</a>.
+                    <a class="btn btn-outline-success" href="{{ request()->getSchemeAndHttpHost() }}/reset-password/{{$token}}">Klik disini</a>.
                 </div>
             </div>
         </div>
