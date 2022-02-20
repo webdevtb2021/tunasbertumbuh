@@ -145,7 +145,16 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        // disini seluruh fungsi CRUD harus menyertakan Bearer Tokennya, karena untuk memberitahukan API Laravel 
+        // bahwa oh ternyata yg request HTTP ini udah terautorisasi (udah pernah login)
+        // untuk sekarang mungkin seperti ini. 
+        axios.get(this.endpoint, 
+            {// dari sini
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }//sampai sini
+        )
         .then((response)=>{
             this.data = response.data;
             this.$nextTick(function() {
@@ -172,7 +181,11 @@ export default {
         },
 
         createData(){
-            this.form.post(this.endpoint,{})
+            this.form.post(this.endpoint, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -195,7 +208,11 @@ export default {
 
         updateData(){
             console.log(this.form.id)
-            this.form.put(this.endpoint + '/' + this.form.id,{})
+            this.form.put(this.endpoint + '/' + this.form.id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -224,7 +241,11 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if(result.value){
-                    this.form.delete(this.endpoint + '/' + id,{})
+                    this.form.delete(this.endpoint + '/' + id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
                     .then(()=>{
                         swal.fire('Deleted!',
                                     'Your data has been deleted',

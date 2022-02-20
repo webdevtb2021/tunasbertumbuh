@@ -312,6 +312,7 @@ const routes = [
       props: true,
 	  meta: { authorize : [1,8,6,2] }
     },
+	
     {
         path: '/:pathMatch(.*)*',
         redirect: "/"
