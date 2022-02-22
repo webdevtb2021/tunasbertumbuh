@@ -15,7 +15,7 @@
                 <router-link :to="{ name: 'homepage' }" class="navbar-brand">
                   <img
                     src="storage/img/whiteLogo.png"
-                    alt="AdminLTE Logo"
+                    alt="Logo"
                     class="brand-image img-circle elevation-3"
                     style="opacity: 0.8"
                   />

@@ -36,6 +36,7 @@ import AbsensiPekanBeasiswa from "./guest/absensipekanbeasiswa";
 import adminPesertapb from "./admin/adminPesertapb";
 import pesertapbDetails from "./components/pesertapbDetails";
 import NotFound from "./components/NotFound";
+import adminProfile from "./admin/adminProfile";
 
 // META PERMISSION ACCESS
 // 0: Have no access admin
@@ -312,6 +313,15 @@ const routes = [
       props: true,
 	  meta: { authorize : [1,8,6,2] }
     },
+
+    {
+      path:"/profile", 
+      component: adminProfile,
+      name: 'profile',
+      props: true,
+	  meta: { authorize: [0,1, 2, 3, 4, 5, 6,7,8] }
+    },
+
     {
         path: '/:pathMatch(.*)*',
         redirect: "/"
@@ -345,7 +355,6 @@ router.beforeEach((to, from, next) => {
 		})
 		return next({path: '/'})
 	}
-
 
 	// kalo array meta kosong, berarti semua permission boleh akses halaman
 	if(authorize.length > 0) 

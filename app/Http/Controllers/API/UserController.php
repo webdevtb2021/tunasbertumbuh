@@ -149,25 +149,36 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $this->validate($request,[
             'name' => 'required|string',
-            'email' => 'required|string',
         ]);
 
         $dependences = $user->latestDependences()->where('user_id',$id)->exists()? $user->latestDependences()->where('user_id',$id)->get() : new Dependence;
         if($request->url_image!='null'){
             if($dependences[0]->url_image){
-                $path = "'\storage\public\images\users\'".$dependences[0]->url_image;
-                try{
-                    unlink($path);
+                if($dependences[0]->url_image == $request->url_image) {
+                     $filename=$dependences[0]->url_image;
                 }
-                catch (\Exception $e) {
-                    //$e->getMessage();
-                }            
-            }                
-            $image = $request->url_image;
-            $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
-            $img = Image::make($image->getRealPath());
-            $img->stream();
-            Storage::disk('public')->put('/images/users/'.$filename,$img);
+                else{
+                    $path = "'\storage\public\images\users\'".$dependences[0]->url_image;
+                    try{
+                        unlink($path);
+                    }
+                    catch (\Exception $e) {
+                        //$e->getMessage();
+                    } 
+                    $image = $request->url_image;
+                    $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+                    $img = Image::make($image->getRealPath());
+                    $img->stream();
+                    Storage::disk('public')->put('/images/users/'.$filename,$img);
+                }
+            }
+            else{
+                $image = $request->url_image;
+                $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('public')->put('/images/users/'.$filename,$img);
+            }
         }
         else{
             if($dependences[0]->url_image)
@@ -178,9 +189,6 @@ class UserController extends Controller
 
         $user->update([
             'name' =>  $request->name,
-            'email' =>  $request->email,
-            'permission' => $request->permission,
-            'status' => $request->status,
         ]);
         $user->save();
 
