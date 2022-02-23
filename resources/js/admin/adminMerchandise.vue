@@ -158,7 +158,11 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint,{
+           headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+           }
+        })
         .then((response)=>{
             this.merchandises = response.data;
             this.$nextTick(function() {
@@ -169,7 +173,11 @@ export default {
 
     methods: {
         getData() {
-            axios.get(this.endpoint)
+            axios.get(this.endpoint,{
+               headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+               }
+            })
             .then((response)=>{
                 this.merchandises = response.data;
                 this.$nextTick(function() {
@@ -196,7 +204,9 @@ export default {
             formData.append('image',this.imageUpload)
 
             axios.post(this.endpoint, formData,{
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{'Content-Type':'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
             })
             .then(() => {
                $('#exampleModal').modal('hide');
@@ -245,7 +255,9 @@ export default {
             formData.append('_method', 'PUT');
 
             axios.post(this.endpoint +'/'+ this.form.id, formData,{
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{'Content-Type':'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
             })
             .then(() => {
                $('#exampleModal').modal('hide');
@@ -277,7 +289,11 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if(result.value){
-                    this.form.delete(this.endpoint + '/' + id,{})
+                    this.form.delete(this.endpoint + '/' + id,{
+                       headers: {
+                          'Authorization': 'Bearer ' + localStorage.getItem('token')
+                       }
+                    })
                     .then(()=>{
                         swal.fire('Deleted!',
                                     'Your data has been deleted',

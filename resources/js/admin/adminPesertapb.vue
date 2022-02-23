@@ -119,7 +119,11 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
         .then((response)=>{
             this.pesertapbs = response.data.pesertapbs;
             let sesipbs = response.data.sesipbs;
@@ -151,7 +155,11 @@ export default {
         getData(){
             if(this.sesi.length==0){
                 $('#adminPesertapbTable').DataTable().destroy();
-                axios.get(this.endpoint)
+                axios.get(this.endpoint, {
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    })
                     .then((response)=>{
                         this.pesertapbs = response.data.pesertapbs;
                         this.$nextTick(function() {
@@ -173,7 +181,11 @@ export default {
             }
             else{
                 $('#adminPesertapbTable').DataTable().destroy();
-                axios.get(this.endpoint+'s/'+this.sesi.toString())
+                axios.get(this.endpoint+'s/'+this.sesi.toString(), {
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    })
                     .then((response)=>{
                         this.pesertapbs = response.data;
                         this.$nextTick(function() {

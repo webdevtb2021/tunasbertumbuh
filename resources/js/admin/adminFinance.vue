@@ -145,7 +145,13 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, 
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+        )
         .then((response)=>{
             this.data = response.data;
             this.$nextTick(function() {
@@ -172,7 +178,11 @@ export default {
         },
 
         createData(){
-            this.form.post(this.endpoint,{})
+            this.form.post(this.endpoint, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -195,7 +205,11 @@ export default {
 
         updateData(){
             console.log(this.form.id)
-            this.form.put(this.endpoint + '/' + this.form.id,{})
+            this.form.put(this.endpoint + '/' + this.form.id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -224,7 +238,11 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if(result.value){
-                    this.form.delete(this.endpoint + '/' + id,{})
+                    this.form.delete(this.endpoint + '/' + id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
                     .then(()=>{
                         swal.fire('Deleted!',
                                     'Your data has been deleted',

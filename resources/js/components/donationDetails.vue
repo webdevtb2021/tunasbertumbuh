@@ -113,7 +113,11 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, {
+              headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+              }
+          })
         .then((response)=>{
             this.donations = response.data;
                 this.image=ref([]);
@@ -132,7 +136,11 @@ export default {
 
     methods: {
         getData() {
-            axios.get(this.endpoint)
+            axios.get(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
 	        .then((response)=>{
 	            this.donations = response.data;
                 this.image=ref([]);
@@ -150,7 +158,11 @@ export default {
         },
 
         updateData(){
-            this.form.put(this.endpoint,{})
+            this.form.put(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({

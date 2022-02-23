@@ -201,7 +201,11 @@ export default {
 
     methods: {
         getData() {
-            axios.get(this.endpoint)
+            axios.get(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then((response)=>{
                 this.data = response.data;
                 this.fileExist=[];
@@ -249,7 +253,9 @@ export default {
             formData.append('_method', 'PUT');
 
             axios.post(this.endpoint, formData,{
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{'Content-Type':'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
             })
             .then(()=>{
                 $('#exampleModal').modal('hide');

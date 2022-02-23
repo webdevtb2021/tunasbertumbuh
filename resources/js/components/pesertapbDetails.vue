@@ -130,7 +130,11 @@ export default {
 
     methods: {
         getData() {
-            axios.get(this.endpoint)
+            axios.get(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then((response)=>{
                 this.data = response.data;
                 this.ssfollow=ref([]);

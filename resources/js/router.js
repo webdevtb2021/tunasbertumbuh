@@ -313,7 +313,7 @@ const routes = [
       props: true,
 	  meta: { authorize : [1,8,6,2] }
     },
-
+    
     {
       path:"/profile", 
       component: adminProfile,
@@ -335,8 +335,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-	console.log(localStorage.getItem("token"))
 	const { authorize } = to.meta;
+/*	console.log(localStorage.getItem("token"))
 	console.log("======================================")
 	console.log(authorize);
 	console.log(authorize.includes(localStorage.getItem("user_permission")));
@@ -344,7 +344,7 @@ router.beforeEach((to, from, next) => {
 	console.log(localStorage.getItem("user_id"))
 	console.log(typeof(localStorage.getItem("user_id")))
 	console.log("======================================")
-
+*/
 	// kalau akses halaman login tapi udah login duluan
 	if((to.path == "/login" || to.path == "/register") && localStorage.getItem("token") != null) 
 	{

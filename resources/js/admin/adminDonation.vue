@@ -76,7 +76,11 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
         .then((response)=>{
             this.donations = response.data;
             this.$nextTick(function() {

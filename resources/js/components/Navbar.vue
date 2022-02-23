@@ -86,6 +86,8 @@
                         </div>
                         <div v-else>
                           <router-link :to="{ name: 'logout' }" class="dropdown-item">Logout</router-link>
+                          <router-link :to="{ name: 'profile' }" class="dropdown-item">Profil</router-link>
+                          <router-link :to="{ name: 'Forgot Password' }" class="dropdown-item">Reset Password</router-link>
                           <div class="dropdown-divider"></div>
                           <router-link :to="{ name: 'AdminFinance' }" class="dropdown-item" v-if="auth_permission==1 || auth_permission==8 || auth_permission==2">Data Keuangan</router-link>
                           <router-link :to="{ name: 'AdminVolunteer' }" class="dropdown-item" v-if="auth_permission==1 || auth_permission==8 || auth_permission==5">Data Volunteer</router-link>

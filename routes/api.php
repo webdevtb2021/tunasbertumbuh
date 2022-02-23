@@ -35,22 +35,37 @@ use App\Http\Controllers\API\PesertapbController;
 //     return $request->user();
 // });
 
+
+
+// setiap kali akses API ini, harus menyertakan Authorization Bearer Tokennya di HTTP REQUEST nya
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/logout', [LoginController::class, 'logout']);
+    Route::apiResource('/donations', DonationController::class); 
+    Route::apiResource('/adminfinance',FundreportController::class);
+    Route::apiResource('/adminvolunteer',VolunteerController::class);
+    Route::apiResource('/admindivision',DivisionController::class);
+    Route::apiResource('/adminmember',UserController::class);
+    Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 
+    Route::apiResource('/adminpartnership',PartnershipController::class);
+    Route::apiResource('/adminmerchandise', MerchandiseController::class); 
+    Route::apiResource('/admindonation', DonationController::class); 
+    Route::apiResource('/adminarticle', ArticleController::class); 
+    Route::apiResource('/adminproject', ProjectController::class); 
+    Route::apiResource('/adminsesipb',SesipbController::class);
+    Route::apiResource('/adminpesertapb',PesertapbController::class);
+    Route::get('/adminpesertapbs/{id}',[PesertapbController::class, 'indexFilter']);
+    Route::get('/profile/{userid}',[UserController::class,'show']); 
+    Route::put('/profile/{userid}',[UserController::class, 'update']);
 });
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
-
-
 Route::get('/homepage', [App\Http\Controllers\API\HomepageController::class, 'index']);
-
 // Route::get('/forget-password', [ForgotPasswordController::class, 'getEmail']);
 Route::post('/forget-password', [ForgotPasswordController::class, 'postEmail']);
 Route::post('/getEmail', [ForgotPasswordController::class, 'getEmailFromToken']);
-
 Route::put('/resetPassword',[ResetPasswordController::class, 'updatePassword']);
 // Route::get('/reset-password/{token}',[ResetPasswordController::class, 'getPassword']);
-
+Route::get('/partnerships', [PartnershipController::class, 'index']);
 Route::get('/volunteers', [VolunteerController::class, 'indexVolunteer']); 
 Route::get('/projects', [ProjectController::class,'indexProjects']); 
 Route::get('/projects/{id}', [ProjectController::class,'show']); 
@@ -62,24 +77,6 @@ Route::get('/articles', [ArticleController::class,'indexArticles']);
 Route::get('/articles/{id}', [ArticleController::class,'show']); 
 Route::get('merchandises', [MerchandiseController::class,'indexMerchandise']); 
 Route::get('/donationGuest', [DonationController::class,'indexDonations']); 
-
-Route::apiResource('partnerships', PartnershipController::class); 
-Route::apiResource('/donations', DonationController::class); 
-Route::apiResource('/adminfinance',FundreportController::class);
-Route::apiResource('/adminvolunteer',VolunteerController::class);
-Route::apiResource('/admindivision',DivisionController::class);
-Route::apiResource('/adminmember',UserController::class);
-Route::apiResource('/adminmember/{userid}/adminposition', PositionController::class); 
-Route::apiResource('/adminpartnership',PartnershipController::class);
-Route::apiResource('/adminmerchandise', MerchandiseController::class); 
-Route::apiResource('/admindonation', DonationController::class); 
-Route::apiResource('/adminarticle', ArticleController::class); 
-Route::apiResource('/adminproject', ProjectController::class); 
-Route::apiResource('/adminsesipb',SesipbController::class);
-Route::apiResource('/adminpesertapb',PesertapbController::class);
-Route::get('/profile/{userid}',[UserController::class,'show']); 
-Route::put('/profile/{userid}',[UserController::class, 'update']);
-Route::get('/adminpesertapbs/{id}',[PesertapbController::class, 'indexFilter']);
 
 Route::get('/pekanbeasiswa',[SesipbController::class, 'index']);
 Route::post('/pekanbeasiswa',[PesertapbController::class, 'store']);

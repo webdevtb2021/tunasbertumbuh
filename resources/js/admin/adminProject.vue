@@ -84,7 +84,11 @@ export default {
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
         .then((response)=>{
             this.projects = response.data;
             this.$nextTick(function() {
@@ -95,7 +99,11 @@ export default {
 
     methods: {
         getData(){
-            axios.get(this.endpoint)
+            axios.get(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then((response)=>{
                 this.projects = response.data;
                 this.$nextTick(function() {
@@ -114,7 +122,11 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if(result.value){
-                    axios.delete(this.endpoint + '/' + id,{})
+                    axios.delete(this.endpoint + '/' + id, {
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    })
                     .then(()=>{
                         swal.fire('Deleted!',
                                     'Your data has been deleted',

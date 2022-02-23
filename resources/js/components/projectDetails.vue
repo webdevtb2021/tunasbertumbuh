@@ -135,7 +135,11 @@ export default {
           if(id=='create')
             console.log('A')
           else{
-            axios.get('/api/adminproject/'+id)
+            axios.get('/api/adminproject/'+id, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then((response)=>{
                 this.projects = response.data;
                 this.imagesList=[];
@@ -182,7 +186,9 @@ export default {
             formData.append('image',this.imageUpload.raw)
 
             axios.post('/api/adminproject', formData,{
-                headers:{'Content-Type':'multipart/form-data'}
+                headers:{'Content-Type':'multipart/form-data',
+                          'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
             })
             .then((response) => {
                $('#exampleModal').modal('hide');
@@ -217,8 +223,10 @@ export default {
             }
             formData.append('_method', 'PUT');
 
-            axios.post(this.endpoint, formData,{
-                headers:{'Content-Type':'multipart/form-data'}
+            axios.post(this.endpoint, formData, formData,{
+                headers:{'Content-Type':'multipart/form-data',
+                          'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
             })
             .then((response)=>{
                 $('#exampleModal').modal('hide');

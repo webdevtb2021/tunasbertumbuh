@@ -136,7 +136,11 @@ import Navbar from '../components/Navbar';
     },
 
     mounted(){
-        axios.get(this.endpoint)
+        axios.get(this.endpoint, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
         .then((response)=>{
             this.data = response.data;
             this.$nextTick(function() {
@@ -147,7 +151,11 @@ import Navbar from '../components/Navbar';
 
     methods: {
         getData() {
-            axios.get(this.endpoint)
+            axios.get(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then((response)=>{
                 this.data = response.data;
                 this.$nextTick(function() {
@@ -173,7 +181,11 @@ import Navbar from '../components/Navbar';
         },
 
         createData(){
-            this.form.post(this.endpoint,{})
+            this.form.post(this.endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -201,7 +213,11 @@ import Navbar from '../components/Navbar';
         },
 
         updateData(){
-            this.form.put(this.endpoint + '/' + this.form.id,{})
+            this.form.put(this.endpoint + '/' + this.form.id, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
             .then(()=>{
                 $('#exampleModal').modal('hide');
                 swal.fire({
@@ -230,7 +246,11 @@ import Navbar from '../components/Navbar';
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if(result.value){
-                    this.form.delete(this.endpoint + '/' + id,{})
+                    this.form.delete(this.endpoint + '/' + id, {
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    })
                     .then(()=>{
                         swal.fire('Deleted!',
                                     'Your data has been deleted',
