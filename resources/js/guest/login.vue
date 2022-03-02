@@ -212,45 +212,60 @@ export default {
 		},
 		redirectToPage(resultUser) {
 			if(resultUser.data.user.permission == 0) {
-				// 0: Have no access admin
-
+				// 0: Have no access to admin, redirect to homepage
+				this.$router.push({
+					path: "/",
+				})
 			}
 			else if(resultUser.data.user.permission == 1) {
-				// 1: all access
+				// 1 : founder, executive director, hak akses semua admin, redirect to homepage
 				this.$router.push({
 					path: "/",
 				})
 			}
 			else if(resultUser.data.user.permission == 2) {
-				// 2: Web Dev
+				// 2: AFD, melihat data member, mengelola data finance
 				this.$router.push({
-					path: "/",
+					path: "/adminfinance",
 				})
 			}
 			else if(resultUser.data.user.permission == 3) {
-				// 3: HR
+				// 3: HRD, mengelola data departemen dan member
 				this.$router.push({
 					path: "/admindivision",
 				})
 			}
 			else if(resultUser.data.user.permission == 4) {
-				// 4: Marketing and Fundraisin
+				// 4: Marketing and Fundraising Department (MFD), mengelola data merchandise
 				this.$router.push({
-					path: "/adminfinance",
+					path: "/adminmerchandise",
 				})
 			}
 			else if(resultUser.data.user.permission == 5) {
-				// 5: Comm and Partner
+				// 5: Communication and Partner Department (CPD), mengelola data partnership
 				this.$router.push({
-					path: "/",
+					path: "/adminvolunteer",
 				})
 			}
 			else if(resultUser.data.user.permission == 6) {
-				// 6: Project management
+				// 6: Project Management Departement (PMD), mengelola data projects
+				this.$router.push({
+					path: "/adminproject",
+				})
+			}
+			else if(resultUser.data.user.permission == 7) {
+				// 7: MIT, return to homepage
 				this.$router.push({
 					path: "/",
 				})
 			}
+			else if(resultUser.data.user.permission == 8) {
+				// 7: Web Development, mengakses seluruh fitur, debugging, arahkan ke homepage aja
+				this.$router.push({
+					path: "/",
+				})
+			}
+			
 		},
 		logout() {
 			this.removeLocalStorage();
