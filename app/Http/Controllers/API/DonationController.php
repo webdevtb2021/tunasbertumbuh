@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use App\Models\Donator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Storage;
 use Image;
 
@@ -48,10 +49,18 @@ class DonationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $validate = Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|string',
         ]);
+
+        if($validate->fails())
+        {
+            return response([
+                "message" => $validate->errors()->first(),
+                "status" => 'fail',
+            ],400);
+        }
 
         $donator = Donator::updateOrCreate(
             ['email' =>  $request->email],
@@ -61,11 +70,23 @@ class DonationController extends Controller
         );
 
         $image = $request->image;
-        $filename = $donator->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/donations/'.$filename,$img);
+        error_log($image);
+        error_log(gettype($image));
+        error_log(!is_null($image));
+        error_log($image != "null");
+        error_log(gettype(!is_null($image)));
+        if($image != "null")
+        {
+            $filename = $donator->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/donations/'.$filename,$img);
+        }
+        else {
+            $filename = "null";
+        }
 
+        
         return Donation::create([            
             'category' => $request->category,
             'bukti' => $filename,

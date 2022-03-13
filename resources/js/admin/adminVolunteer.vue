@@ -233,7 +233,7 @@ export default {
             this.dialogImageUrl = ''
             this.dialogVisible = false
             this.imageUpload =null
-            this.$refs['upload'].clearFiles();
+            // this.$refs['upload'].clearFiles();
             $('#exampleModal').modal('show'); 
         },
 
@@ -274,10 +274,10 @@ export default {
             this.isFormCreateMode=false;
             this.form.reset();
             this.form.clear();
-            this.dialogImageUrl = ''
+            this.dialogImageUrl = '' 
             this.dialogVisible = false
             this.imageUpload =null
-            this.$refs['upload'].clearFiles();
+            // this.$refs['upload'].clearFiles();
             $('#exampleModal').modal('show'); 
             this.form.fill(d);
         },

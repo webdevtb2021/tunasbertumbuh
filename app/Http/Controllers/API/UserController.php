@@ -10,6 +10,7 @@ use App\Models\Division;
 use App\Models\Position;
 use App\Models\Dependence;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Storage;
 use Image;
@@ -84,10 +85,17 @@ class UserController extends Controller
         ]);
 
         $image = $request->url_image;
-        $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/users/'.$filename,$img);
+        error_log($image != "null");
+        error_log(gettype($image != "null"));
+        if($image != 'null') {
+            $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/users/'.$filename,$img);
+        }
+        else {
+            $filename = "null";
+        }
 
         $user->dependences()->create([  
             'phone' =>  $request->phone,          
@@ -166,18 +174,28 @@ class UserController extends Controller
                         //$e->getMessage();
                     } 
                     $image = $request->url_image;
+                    if($image != 'null') {
+                        $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+                        $img = Image::make($image->getRealPath());
+                        $img->stream();
+                        Storage::disk('public')->put('/images/users/'.$filename,$img);
+                    }
+                    else {
+                        $filename = "null";
+                    }
+                }
+            }
+            else{
+                $image = $request->url_image;
+                if($image != 'null') {
                     $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
                     $img = Image::make($image->getRealPath());
                     $img->stream();
                     Storage::disk('public')->put('/images/users/'.$filename,$img);
                 }
-            }
-            else{
-                $image = $request->url_image;
-                $filename = $user->id.'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
-                $img = Image::make($image->getRealPath());
-                $img->stream();
-                Storage::disk('public')->put('/images/users/'.$filename,$img);
+                else {
+                    $filename = "null";
+                }
             }
         }
         else{
@@ -192,18 +210,19 @@ class UserController extends Controller
         ]);
         $user->save();
 
+        
         $user->dependences()->updateOrCreate(
-            ['user_id'=>$id],
+            [ 'user_id' => $id ],
             [  
-            'phone' =>  $request->phone,          
-            'testimony' =>  $request->testimony,          
-            'instagram' =>  $request->instagram,          
-            'facebook' =>  $request->facebook,          
-            'twitter' =>  $request->twitter,          
-            'url_image' =>  $filename,
+                'phone' =>  $request->phone,          
+                'testimony' =>  $request->testimony,          
+                'instagram' =>  $request->instagram,          
+                'facebook' =>  $request->facebook,          
+                'twitter' =>  $request->twitter,          
+                'url_image' =>  $filename,
             ]
         );
-
+        error_log("======================== SAVING ".$id." HERE ========================");
         return $user;
     }
 

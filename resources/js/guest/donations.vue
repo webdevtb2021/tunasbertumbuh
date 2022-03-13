@@ -244,8 +244,8 @@ export default {
             caraBayar:'',
             catatan:'',
             jenisBarang:[],
-            imageUpload:null
-
+            imageUpload:null,
+            submitStatus:true,
 
             
         }
@@ -275,6 +275,7 @@ export default {
         },
 
         handleSubmit(){
+          this.submitStatus = true;
           const formData = new FormData()
           formData.append('name', this.name1+" "+this.name2)
           formData.append('email', this.email)
@@ -293,17 +294,41 @@ export default {
               formData.append('jenis_jumlah', this.jenisBarang)
               formData.append('notes', this.catatan)
           }
-          formData.append('image',this.imageUpload)
 
-          axios.post('../api/donations', formData,{
-                headers:{'Content-Type':'multipart/form-data'}
-          })
-           .then(({ data }) => {
-               console.log(data)
-           })
-           .catch(({ response }) => {
-               console.log(response)
-           })
+          if(this.imageUpload == null)
+          {
+            swal.fire({
+              title: 'Oops !',
+              text:   "Bukti pembayaran harus disertakan",
+              icon: 'warning',
+            });
+            this.submitStatus = false;
+          }
+          else {
+            formData.append('image',this.imageUpload)
+          }
+
+          if(this.submitStatus) {
+            axios.post('../api/donations', formData,{
+                  headers:{'Content-Type':'multipart/form-data'}
+            })
+            .then(({ data }) => {
+              console.log(data)
+              swal.fire({
+                title: 'Success',
+                text:   "Donation accepted, thank you",
+                icon: 'success',
+              });
+            })
+            .catch(({ response }) => {
+              swal.fire({
+                title: 'Oops !',
+                text:   response.data.message,
+                icon: 'warning',
+              });
+                console.log(response)
+            })
+          }
         }
     },
 

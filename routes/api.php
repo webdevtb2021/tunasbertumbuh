@@ -40,7 +40,6 @@ use App\Http\Controllers\API\PesertapbController;
 // setiap kali akses API ini, harus menyertakan Authorization Bearer Tokennya di HTTP REQUEST nya
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/logout', [LoginController::class, 'logout']);
-    Route::apiResource('/donations', DonationController::class); 
     Route::apiResource('/adminfinance',FundreportController::class);
     Route::apiResource('/adminvolunteer',VolunteerController::class);
     Route::apiResource('/admindivision',DivisionController::class);
@@ -56,6 +55,13 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/adminpesertapbs/{id}',[PesertapbController::class, 'indexFilter']);
     Route::get('/profile/{userid}',[UserController::class,'show']); 
     Route::put('/profile/{userid}',[UserController::class, 'update']);
+
+    // route donations khusus admin
+    // Route::apiResource('/donations', DonationController::class); 
+    Route::get('/donations', [DonationController::class,"index"]);
+    Route::get('/donations/{id}', [DonationController::class,"show"]);
+    Route::put('/donations', [DonationController::class, 'update']);
+    Route::delete('/donations', [DonationController::class, 'destroy']);
 });
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
@@ -81,3 +87,6 @@ Route::get('/donationGuest', [DonationController::class,'indexDonations']);
 Route::get('/pekanbeasiswa',[SesipbController::class, 'index']);
 Route::post('/pekanbeasiswa',[PesertapbController::class, 'store']);
 Route::put('/absensipekanbeasiswa',[PesertapbController::class, 'update']);
+
+// route donations khusus pendatang, bukan registered user
+Route::post('/donations', [DonationController::class, "store"]);
