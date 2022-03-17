@@ -14,7 +14,7 @@
                 <div class="col">
                   <div class="card py-3">
                       <div class="card-body">
-                        <img class="card-img-top pb-3" :src="'storage/images/projects/'+d.image" alt="Card image cap">
+                        <img v-if="d.image" class="card-img-top pb-3" :src="'storage/images/projects/'+d.image" alt="Card image cap">
                         <h4 class="pb-3 border-bottom"><b> {{ d.title }}</b></h4>
                         <p class="card-text overflow-hidden" style="height: 70px;"> {{ d.excerpt }} </p>
                         <router-link :to="{ name: 'projects.show', params: { id: d.id } }" class="btn-1 px-4">See More..</router-link>

@@ -86,8 +86,10 @@
                                     <tr v-for="(d, index) in data.member.positions" :key="index">
                                         <td>{{ d.periode.name }}</td>
                                         <td>{{ d.jabatan.name }}</td>
-                                        <td>{{ d.division.name }}</td>
-                                        <td>{{ d.leader.name }}</td>                                
+                                        <td v-if="d.division">{{ d.division.name }}</td>
+                                        <td v-else></td>
+                                        <td v-if="d.leader">{{ d.leader.name }}</td>
+                                        <td v-else></td>           
                                         <td v-if="auth_permission==3">
                                             <button class="btn btn-sm btn-link" @click.prevent="editData(d)">
                                                 <i class="fas fa-edit text-warning"/>

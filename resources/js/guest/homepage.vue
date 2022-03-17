@@ -1,6 +1,8 @@
 <template>
 <div>
   <Navbar/>
+  
+  <!--
   <section id="carousel">
     <Carousel :autoplay="3000" :wrap-around="true">
       <Slide v-for="(carouselData, index) in data.carousels" :key="index"> 
@@ -12,6 +14,7 @@
       </template>
     </Carousel>
   </section>
+  -->
 
   <!-- Content -->
   <section

@@ -27,8 +27,8 @@ export default {
           .nodeHeight((d) => 70)
           .nodeWidth((d) => {
               if (d.depth == 0) return 250;
-              if (d.depth == 1) return 220;
-              return 140;
+              if (d.depth == 1) return 240;
+              return 230;
             })
           .childrenMargin((d) => 50)
           .compactMarginBetween((d) => 35)
@@ -56,7 +56,7 @@ export default {
 
               <div style="color:#fafafa;font-size:${
                 d.depth < 2 ? 16 : 12
-              }px;font-weight:bold;margin-left:70px;margin-top:15px"> ${d.depth < 2 ? d.data.name : (d.data.name || '').trim().split(/\s+/g)[0]} </div>
+              }px;font-weight:bold;margin-left:70px;margin-top:15px"> ${d.data.name} </div>
               <div style="color:#fafafa;margin-left:70px;margin-top:5px"> ${
                 d.data.positionName 
               } </div>

@@ -113,8 +113,10 @@
                                                         <tr v-for="(d, index) in data.member.positions" :key="index">
                                                             <td>{{ d.periode.name }}</td>
                                                             <td>{{ d.jabatan.name }}</td>
-                                                            <td>{{ d.division.name }}</td>
-                                                            <td>{{ d.leader.name }}</td> 
+                                                            <td v-if="d.division">{{ d.division.name }}</td>
+                                                            <td v-else></td>
+                                                            <td v-if="d.leader">{{ d.leader.name }}</td>
+                                                            <td v-else></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
