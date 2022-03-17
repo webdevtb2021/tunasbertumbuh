@@ -7,7 +7,7 @@
 
         <div class="justify-content-center align-items-center d-flex">
             <button class="m-2 btn btn-danger" @click="logout">Log out</button>
-            <button class="m-2 btn btn-warning" @click="home">Go back</button>
+            <button class="m-2 btn btn-warning" @click="home">Go home</button>
         </div>
     </div>
 </div>
@@ -58,6 +58,14 @@ export default {
                     })
                 })
             },
+
+            
+            home() {
+                this.$router.push({
+                    path:"/",
+                })
+            },
+
             removeLocalStorage() {
                 localStorage.removeItem("user_id");
                 localStorage.removeItem("token");

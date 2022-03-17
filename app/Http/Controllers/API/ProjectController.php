@@ -53,13 +53,17 @@ class ProjectController extends Controller
             'title' => 'required|string',
             'body' => 'required|string',
         ]);
-
-        $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/projects/'.$filename,$img);
-
+        
+        if($request->image){
+            $image = $request->image;
+            $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/projects/'.$filename,$img);
+        }
+        else
+            $filename = null;
+            
         return Project::create([            
             'title' => $request->title,
             'body' => $request->body,

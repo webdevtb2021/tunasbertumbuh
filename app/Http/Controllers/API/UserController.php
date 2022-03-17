@@ -38,7 +38,7 @@ class UserController extends Controller
         if($period==null)
             $period = Periode::max('id');
         $periodes = Periode::all();
-        $member = Position::with('user:id,name','jabatan','periode','division:id,name')->where('periode_id',$period)->orderBy('jabatan_id','ASC')->get();
+        $member = Position::with('user:id,name','jabatan','periode','division:id,name')->where('periode_id',$period)->orderBy('jabatan_id','ASC')->orderBy('leader','ASC')->get();
         $data=null;
         $data["member"] = $member;
         $data["period"] = $periodes;
@@ -124,7 +124,7 @@ class UserController extends Controller
         $period = Periode::all();
         $jabatan = Jabatan::all();
         $division = Division::all();
-        $leader = User::where('status','=','1')->orderBy('name','ASC')->select('id','name')->get();
+        $leader = User::orderBy('name','ASC')->select('id','name')->get();
         $data=null;
         $data["member"] = $member;
         $data["period"] = $period;

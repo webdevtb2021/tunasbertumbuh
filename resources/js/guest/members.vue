@@ -16,7 +16,7 @@
             </div>
             <br>
             <div id="org" v-if="data.member" 
-                style="height: 1200px; background-color: #fffeff">
+                style="height: 900px; background-color: #fffeff">
                 <Chart :data="nodess"></Chart>
             </div>
         </div>
@@ -53,8 +53,9 @@ export default {
             let nodesData = [];
             for(let i = 0; i < this.data.member.length; i++){
                 let divisi = '';
-                if(! this.data.member[i].division === null)
+                if(this.data.member[i].division !== null)
                     divisi = this.data.member[i].division.name;
+                
                 nodesData.push({
                                 "id" : this.data.member[i].user_id,
                                 "parentId" : this.data.member[i].leader,
