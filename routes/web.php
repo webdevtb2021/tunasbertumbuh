@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+/*
+//This route to create storage link only
+Route::get('/symlink', function () {
+   $target =$_SERVER['DOCUMENT_ROOT'].'/../laravel/storage/app/public';
+   $link = $_SERVER['DOCUMENT_ROOT'].'/storage';
+   echo 'Target '.$target;
+   echo 'Link '.$link;
+   symlink($target, $link);
+   echo "Done";
+});
+
+//This route to run passport:install
+Route::get('/installpassport', function () {
+    Artisan::call('passport:install');
+});
+*/
+
+
 Route::get('/', function () {
     return view('layouts.guest');
 });
