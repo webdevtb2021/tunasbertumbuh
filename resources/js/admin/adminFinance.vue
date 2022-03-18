@@ -190,8 +190,14 @@ export default {
                     title:'Data keuangan created successfully'
                 })
                 this.getData();
-            }).catch(()=>{
-                console.log('submit failed');
+            }).catch((response)=>{
+                console.log(response.response.data.message);
+                swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.response.data.message,
+                    footer: 'Please contact web development team for details'
+                });
             });
         },
 

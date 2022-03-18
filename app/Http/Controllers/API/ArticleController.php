@@ -112,9 +112,11 @@ class ArticleController extends Controller
             'title' =>  $request->title,
             'body' => $request->body,
         ]);
+
         $article->save();
         $articleIds = $article->articleImages->pluck('id')->toArray();
         $imagesExist = $request->imagesExist;
+        
         if(count($articleIds) != 0){
             if(!$imagesExist)
                 $imagesDiff = $articleIds;

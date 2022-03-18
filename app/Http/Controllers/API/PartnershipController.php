@@ -47,10 +47,16 @@ class PartnershipController extends Controller
         ]);
 
         $image = $request->image;
-        $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/partnerships/'.$filename,$img);
+
+        if($image != "null") {
+            $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/partnerships/'.$filename,$img);
+        }
+        else {
+            $filename = "null";
+        }
 
         return Partnership::create([      
             'name' => $request->name,

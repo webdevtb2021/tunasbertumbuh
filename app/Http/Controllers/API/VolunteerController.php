@@ -63,10 +63,15 @@ class VolunteerController extends Controller
             'image' => 'required'
         ]);
         $image = $request->image;
-        $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->stream();
-        Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
+        if($image != "null") {
+            $filename = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
+            $img->stream();
+            Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
+        }
+        else {
+            $filename = "null";
+        }
 
         return Volunteer::create([      
             'name' => $request->name,
@@ -127,10 +132,16 @@ class VolunteerController extends Controller
         }
         else{
             $image = $request->image;
-            $filename = Str::slug($request->name).'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
-            $img = Image::make($image->getRealPath());
-            $img->stream();
-            Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
+            
+            if($image != "null") {
+                $filename = Str::slug($request->name).'-'.date('YmdHis').'.'.$image->getClientOriginalExtension();
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('public')->put('/images/volunteers/'.$filename,$img);
+            }
+            else {
+                $filename = "null";
+            }
 
             $volunteer->update([
                 'name' => $request->name,

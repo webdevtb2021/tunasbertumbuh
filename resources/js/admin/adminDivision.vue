@@ -83,7 +83,8 @@
                         <div class="form-group">
                           <label>Struktur Di atasnya</label>
                           <select class='form-control' v-model='form.parent_id'  :disabled="isDisable">
-                                <option v-for='p in data.parents' :value='p.id'>{{ p.name }}</option>
+                                <option :value="null">-</option>
+                                <option v-for='p,index in data.parents' :value='p.id' :key="index">{{ p.name }}</option>
                           </select>
                         </div>
                         <div class="form-group">
@@ -153,6 +154,7 @@ export default {
             }
         })
         .then((response)=>{
+            // ini ngambil seluruh datanya divisinya juga buat jadi pilihan waktu create/edit
             this.data = response.data;
             this.$nextTick(function() {
                 $('#adminDivisionTable').DataTable();
@@ -204,21 +206,24 @@ export default {
                     title:'Data division created successfully'
                 })
                 this.getData();
-            }).catch(()=>{
+            }).catch((error)=>{
+                console.log(error.response.data.message);
                 swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: error.response.data.message,
                     footer: 'Please contact web development team for details'
                 });
             });
         },
 
         editData(d){
+            console.log(d)
             this.formMode=3;
             this.isDisable=false;
             this.form.reset();
             this.form.clear();
+            this.form.parent_id = d.parent_id
             $('#exampleModal').modal('show'); 
             this.form.fill(d);
         },

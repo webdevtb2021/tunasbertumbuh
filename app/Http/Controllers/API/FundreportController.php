@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Fundreport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FundreportController extends Controller
 {
@@ -49,7 +50,7 @@ class FundreportController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
+        $validate = Validator::make($request->all(),[
             'date' => 'required|date|max:191',
             'notes' => 'required|string|max:191',
             'debit' => 'required|numeric',
@@ -58,7 +59,14 @@ class FundreportController extends Controller
             'saldo' => 'required|numeric',
         ]);
 
-        return Fundreport::create([
+        if($validate->fails()) {
+            return response([
+                "message" => $validate->errors()->first(),
+                "status" => "failed",
+            ],400);
+        }
+
+        $fundreport = Fundreport::create([
             'date' =>$request->date,
             'notes' =>$request->notes,
             'debit' =>$request->debit,
@@ -66,6 +74,11 @@ class FundreportController extends Controller
             'kredit' =>$request->kredit,
             'saldo' =>$request->saldo,
         ]);
+
+        return response([
+            "message" => "New fund created",
+            "status" => "success",
+        ],200);
     }
 
     /**

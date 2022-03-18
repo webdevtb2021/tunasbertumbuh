@@ -207,6 +207,10 @@ class UserController extends Controller
 
         $user->update([
             'name' =>  $request->name,
+
+            // ubah hak akses, status
+            'status' => $request->status,
+            'permission' => $request->permission,
         ]);
         $user->save();
 

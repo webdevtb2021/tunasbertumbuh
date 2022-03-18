@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Division;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class DivisionController extends Controller
@@ -43,18 +44,32 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
-            'name' => 'required|string',
+        $validate = Validator::make($request->all(),[
+            'name' => 'required|string|unique:divisions',
             'description' => 'required|string',
             'task' => 'required|string'
         ]);
 
-        return Division::create([
+        if($validate->fails()) 
+        {
+            return response([
+                "message" => $validate->errors()->first(),
+                "status" => "failed",
+            ],400);
+        }
+
+        $division = Division::create([
             'name' =>$request->name,
             'description'=>$request->description,
             'task'=>$request->task,
             'parent_id'=>$request->parent_id,
         ]);
+
+        return response([
+            "message" => "Division created successfully",
+            "status" => "success",
+            "data" => $division,
+        ],200);
     }
 
     /**

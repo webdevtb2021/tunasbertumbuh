@@ -233,7 +233,7 @@ export default {
                 $('#exampleModal').modal('hide');
                 swal.fire({
                     icon:'success',
-                    title:'Verification updated successfully'
+                    title:'Data Article updated successfully'
                 })
                 this.$nextTick(function() {
                     this.$router.go({ name: 'adminarticle.show', params: { id: response.data.id }, query:{isEdit:false } })
