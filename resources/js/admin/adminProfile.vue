@@ -237,7 +237,7 @@ export default {
         },
 
         editData(d){
-            this.isEditMode = true ;
+            this.isEditMode = !this.isEditMode ;
         },
 
         updateData(){

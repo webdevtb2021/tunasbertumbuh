@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Merchandise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Storage;
 use Image;
@@ -58,11 +59,20 @@ class MerchandiseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $validate = Validator::make($request->all(),[
             'title' => 'required|string',
             'description' => 'required|string',
             'price' => 'required|numeric',
         ]);
+
+        if( $validate->fails() )
+        {
+            return response([
+                "message" => $validate->errors()->first(),
+                "status" => "failed",
+            ],400);
+        }
+
         if($request->image!='null'){
             $image = $request->image;
             $filename = Str::slug($request->title).'.'.$image->getClientOriginalExtension();
@@ -71,7 +81,7 @@ class MerchandiseController extends Controller
             Storage::disk('public')->put('/images/merchandises/'.$filename,$img);
         }
         else{
-            $filename=null;
+            $filename="null";
         }
         return Merchandise::create([            
             'title' => $request->title,
