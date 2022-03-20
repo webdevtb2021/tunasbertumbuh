@@ -85,7 +85,8 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'webdevtb2021@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Divisi Web Development - Tunas Bertumbuh'),
+        // 'name' => env('MAIL_FROM_NAME', 'Divisi Web Development - Tunas Bertumbuh'),
+        'name' => 'Divisi Web Development - Tunas Bertumbuh',
     ],
 
     /*

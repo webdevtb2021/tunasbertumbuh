@@ -103,10 +103,10 @@
                   class="card-title text-white py-3"
                   style="font-weight: bold"
                 >
-                  Our Marchandies
+                  Our Merchandises
                 </h5>
                 <p class="card-text text-white pb-2 pt-1">
-                  Interested with our marchandies?
+                  Interested with our merchandises?
                 </p>
                 <router-link :to="{ name: 'merchandises' }" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></router-link>
               </div>
