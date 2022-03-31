@@ -39,30 +39,59 @@
                   id="navbarSupportedContent"
                 >
                   <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'projects' }" class="nav-link">Project</router-link>
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Our Updates
+                      </a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      > 
+                        <div>                       
+                          <router-link :to="{ name: 'articles' }" class="dropdown-item">Article</router-link>
+                          <router-link :to="{ name: 'projects' }" class="dropdown-item">Project</router-link>
+                          <router-link :to="{ name: 'finance' }" class="dropdown-item">Finance</router-link>
+                          <router-link :to="{ name: 'merchandises' }" class="dropdown-item">Merchandise</router-link>
+                        </div>
+                      </div>
                     </li>
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'articles' }" class="nav-link">Article</router-link>
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Our Family
+                      </a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <router-link :to="{ name: 'members' }" class="dropdown-item">Team</router-link>
+                        <router-link :to="{ name: 'partnerships' }" class="dropdown-item">Partnerships</router-link>
+                        <router-link :to="{ name: 'volunteers' }" class="dropdown-item">Volunteers</router-link>
+                      </div>
                     </li>
                     <li class="nav-item">
                       <router-link :to="{ name: 'donations' }" class="nav-link">Donation</router-link>
                     </li>
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'partnerships' }" class="nav-link">Partner</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'members' }" class="nav-link">Team</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'merchandises' }" class="nav-link">Merchandise</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ name: 'finance' }" class="nav-link">Finance</router-link>
-                    </li>
+                    <!-- 
                     <li class="nav-item">
                       <router-link :to="{ name: 'pekanbeasiswa' }" class="nav-link">Pekan Beasiswa 3.0</router-link>
                     </li>
+                    -->
                     <li class="nav-item dropdown">
                       <a
                         class="nav-link dropdown-toggle"
